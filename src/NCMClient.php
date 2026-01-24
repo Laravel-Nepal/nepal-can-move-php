@@ -20,6 +20,8 @@ final class NCMClient
         ?string $baseUri = null,
         ?Client $client = null
     ) {
+        $baseUri = rtrim((string) $baseUri, '/').'/';
+
         $this->client = $client ?? new Client([
             'base_uri' => $baseUri,
             'http_errors' => false,
@@ -53,6 +55,8 @@ final class NCMClient
      */
     private function request(string $method, string $endpoint, array $options = []): array // @phpstan-ignore-line
     {
+        $endpoint = ltrim($endpoint, '/');
+
         try {
             $response = $this->client->request($method, ltrim($endpoint, '/'), $options);
 

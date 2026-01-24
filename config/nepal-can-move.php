@@ -35,7 +35,7 @@ return [
     |
     */
     'base_urls' => [
-        'live' => env('NCM_LIVE_BASE_URL', 'https://portal.nepalcanmove.com/api'),
-        'demo' => env('NCM_DEMO_BASE_URL', 'https://demo.nepalcanmove.com/api'),
+        'live' => env('NCM_LIVE_BASE_URL', 'https://portal.nepalcanmove.com/api/'),
+        'demo' => env('NCM_DEMO_BASE_URL', 'https://demo.nepalcanmove.com/api/'),
     ],
 ];

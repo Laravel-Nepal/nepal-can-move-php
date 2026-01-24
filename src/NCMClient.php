@@ -55,8 +55,6 @@ final class NCMClient
      */
     private function request(string $method, string $endpoint, array $options = []): array // @phpstan-ignore-line
     {
-        $endpoint = ltrim($endpoint, '/');
-
         try {
             $response = $this->client->request($method, ltrim($endpoint, '/'), $options);
 
@@ -77,12 +75,29 @@ final class NCMClient
      */
     private function fail(ResponseInterface $response): void
     {
-        $body = (string) $response->getBody();
+        $body = json_decode((string) $response->getBody(), true);
 
-        match ($response->getStatusCode()) {
-            401 => throw new NCMException('Invalid or missing API token'),
-            404 => throw new NCMException('Resource not found'),
-            default => throw new NCMException($body),
-        };
+        if (is_null($body)) {
+            throw new NCMException("NepalCanMove API error",$response->getStatusCode());
+        }
+
+        if (isset($body['Error'])) {
+            throw new NCMException($this->formatError($body['Error']), $response->getStatusCode());
+        }
+
+        throw new NCMException($body['detail'] ?? 'An unknown error occurred.', $response->getStatusCode());
+    }
+
+    protected function formatError(array|string $error): string
+    {
+        if (is_string($error)) {
+            return $error;
+        }
+
+        return implode(', ', array_map(
+            fn ($key, string $val) => is_numeric($key) ? $val : "{$key}: {$val}",
+            array_keys($error),
+            $error
+        ));
     }
 }

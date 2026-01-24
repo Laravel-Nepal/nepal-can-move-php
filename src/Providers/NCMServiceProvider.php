@@ -6,9 +6,9 @@ namespace AchyutN\NCM\Providers;
 
 use AchyutN\NCM\Exceptions\NCMException;
 use AchyutN\NCM\NCM;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
 
 final class NCMServiceProvider extends ServiceProvider
 {
@@ -57,7 +57,7 @@ final class NCMServiceProvider extends ServiceProvider
                     ? ($baseUrls['demo'] ?? null)
                     : ($baseUrls['live'] ?? null);
 
-                return new NCM($token, $baseUri);
+                return new NCM((string) $token, $baseUri);
             }
         );
     }

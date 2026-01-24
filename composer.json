@@ -1,0 +1,66 @@
+{
+    "name": "achyutn/nepal-can-move",
+    "description": "SDK for integration with the Nepal Can Move API in PHP applications.",
+    "type": "library",
+    "keywords": ["php", "laravel", "e-commerce", "nepal can move", "sdk"],
+    "require": {
+        "php": "^8.2|^8.3|^8.4",
+        "illuminate/http": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.27",
+        "pestphp/pest": "^3.8",
+        "phpstan/phpstan": "^2.1",
+        "rector/rector": "^2.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "AchyutN\\NCM\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AchyutN\\NCM\\Providers\\NCMServiceProvider"
+            ],
+            "aliases": {
+                "NCM": "AchyutN\\NCM\\Facades\\NCM"
+            }
+        }
+    },
+    "authors": [
+        {
+            "name": "achyutkneupane",
+            "email": "achyutkneupane@gmail.com",
+            "homepage": "https://achyut.com.np",
+            "role": "Maintainer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "lint": [
+            "rector",
+            "pint",
+            "phpstan"
+        ],
+        "test:type-coverage": "pest",
+        "test:lint": [
+            "pint --test"
+        ],
+        "test:unit": "# pest --parallel --coverage --min=90",
+        "test": [
+            "@test:lint",
+            "@test:type-coverage",
+            "@test:unit"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

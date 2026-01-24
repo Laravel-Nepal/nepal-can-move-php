@@ -35,7 +35,7 @@ final class NCMClient
     /**
      * @throws NCMException
      */
-    public function get(string $uri, array $query = []): array //@phpstan-ignore-line
+    public function get(string $uri, array $query = []): array // @phpstan-ignore-line
     {
         return $this->request('GET', $uri, ['query' => $query]);
     }
@@ -43,7 +43,7 @@ final class NCMClient
     /**
      * @throws NCMException
      */
-    public function post(string $uri, array $payload = []): array //@phpstan-ignore-line
+    public function post(string $uri, array $payload = []): array // @phpstan-ignore-line
     {
         return $this->request('POST', $uri, ['json' => $payload]);
     }
@@ -51,7 +51,7 @@ final class NCMClient
     /**
      * @throws NCMException
      */
-    private function request(string $method, string $endpoint, array $options = []): array //@phpstan-ignore-line
+    private function request(string $method, string $endpoint, array $options = []): array // @phpstan-ignore-line
     {
         try {
             $response = $this->client->request($method, ltrim($endpoint, '/'), $options);
@@ -65,7 +65,7 @@ final class NCMClient
             throw new NCMException($throwable->getMessage(), $throwable->getCode(), $throwable);
         }
 
-        return json_decode($responseBody, true) ?: []; //@phpstan-ignore-line
+        return json_decode($responseBody, true) ?: []; // @phpstan-ignore-line
     }
 
     /**

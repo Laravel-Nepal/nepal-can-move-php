@@ -37,7 +37,7 @@ final class NCM
     /**
      * Magic method to forward calls to the NCMClient instance.
      */
-    public function __call(string $method, array $parameters) //@phpstan-ignore-line
+    public function __call(string $method, array $parameters) // @phpstan-ignore-line
     {
         return $this->forwardCallTo($this->client, $method, $parameters);
     }

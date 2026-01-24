@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
-test('that true is true', function () {
-    expect(true)->toBeTrue();
-});
+use AchyutN\NCM\Exceptions\NCMException;
+use AchyutN\NCM\NCM;
+
+test('it throws an exception if the api key is empty', function () {
+    new NCM(apiKey: '');
+})->throws(NCMException::class, 'API key is required to communicate with NepalCanMove.');

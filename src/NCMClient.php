@@ -6,7 +6,6 @@ namespace AchyutN\NCM;
 
 use AchyutN\NCM\Exceptions\NCMException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 

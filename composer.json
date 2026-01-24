@@ -4,14 +4,14 @@
     "type": "library",
     "keywords": ["php", "laravel", "e-commerce", "nepal can move", "sdk"],
     "require": {
-        "php": "^8.0|^8.2|^8.3|^8.4",
+        "php": "^8.2|^8.3|^8.4",
         "guzzlehttp/guzzle": "^7.10",
         "illuminate/http": "^10.0|^11.0|^12.0",
         "illuminate/support": "^10.0|^11.0|^12.0"
     },
     "require-dev": {
         "laravel/pint": "^1.27",
-        "pestphp/pest": "^3.8",
+        "pestphp/pest": "^4.3",
         "phpstan/phpstan": "^2.1",
         "rector/rector": "^2.3"
     },
@@ -19,6 +19,11 @@
     "autoload": {
         "psr-4": {
             "AchyutN\\NCM\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AchyutN\\NCM\\Tests\\": "tests/"
         }
     },
     "extra": {

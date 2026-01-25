@@ -61,7 +61,7 @@ describe('order', function () {
     });
 
     it('returns collection of status', function () use ($order) {
-        $statusCollection = $order->getStatus();
+        $statusCollection = $order->status();
 
         expect($statusCollection)
             ->toBeInstanceOf(Collection::class)
@@ -69,13 +69,13 @@ describe('order', function () {
     });
 
     it('can add comment to an order', function () use ($order) {
-        $commentResponse = $order->addComment('This is a test comment.');
+        $commentResponse = $order->addComment('I created this test comment from PHP SDK.');
 
         expect($commentResponse)->toBeTrue();
     });
 
     it('can fetch comments of an order', function () use ($order) {
-        $comments = $order->getComments();
+        $comments = $order->comments();
 
         expect($comments)
             ->toBeInstanceOf(Collection::class)

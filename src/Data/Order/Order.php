@@ -64,7 +64,7 @@ final class Order extends BaseData
      *
      * @throws NCMException
      */
-    public function getStatus(): Collection
+    public function status(): Collection
     {
         return $this->ncm->getOrderStatus($this->orderid);
     }
@@ -76,7 +76,7 @@ final class Order extends BaseData
      *
      * @throws NCMException
      */
-    public function getComments(): Collection
+    public function comments(): Collection
     {
         return $this->ncm->getOrderComments($this->orderid);
     }

@@ -6,9 +6,14 @@ namespace AchyutN\NCM\Managers;
 
 use AchyutN\NCM\Data\Order\CreateOrderRequest;
 use AchyutN\NCM\Data\Order\Order;
+use AchyutN\NCM\Data\Order\OrderStatus;
 use AchyutN\NCM\Exceptions\NCMException;
+use Illuminate\Support\Collection;
 
-/** @phpstan-import-type OrderData from Order */
+/**
+ * @phpstan-import-type OrderData from Order
+ * @phpstan-import-type OrderStatusData from OrderStatus
+ */
 trait OrderManager
 {
     /**
@@ -37,5 +42,21 @@ trait OrderManager
         ]);
 
         return new Order($response, $this);
+    }
+
+    /**
+     * Get order details by order ID.
+     *
+     * @return Collection<int, OrderStatus>
+     * @throws NCMException
+     */
+    public function getOrderStatus(int $id): Collection
+    {
+        /** @var array<OrderStatusData> $response */
+        $response = $this->client->get('/v1/order/status', [
+            'id' => $id,
+        ]);
+
+        return collect($response)->map(fn ($status) => new OrderStatus($status, $this));
     }
 }

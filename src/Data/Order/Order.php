@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace AchyutN\NCM\Data\Order;
 
 use AchyutN\NCM\Data\BaseData;
+use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 /**
  * @phpstan-type OrderData array{
@@ -56,6 +58,15 @@ final class Order extends BaseData
      * The delivery date of the order.
      */
     public ?Carbon $deliveryDate = null;
+
+    /**
+     * @return Collection<int, OrderStatus>
+     * @throws NCMException
+     */
+    public function getStatus(): Collection
+    {
+        return $this->ncm->getOrderStatus($this->orderid);
+    }
 
     protected function fromResponse(array $response): void
     {

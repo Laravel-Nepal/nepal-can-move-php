@@ -71,4 +71,13 @@ describe('order', function () {
 
         expect($commentResponse)->toBeTrue();
     });
+
+    it('can fetch statuses for multiple orders', function () use ($ncm, $order) {
+        $statuses = $ncm->getOrdersStatuses([$order->orderid]);
+
+        expect($statuses)
+            ->toBeInstanceOf(Collection::class)
+            ->and($statuses->first())
+            ->toBeInstanceOf(OrderStatus::class);
+    });
 });

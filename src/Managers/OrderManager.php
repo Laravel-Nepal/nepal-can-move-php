@@ -77,4 +77,26 @@ trait OrderManager
 
         return true;
     }
+
+    /**
+     * Get order status of multiple orders.
+     *
+     * @throws NCMException
+     */
+    public function getOrdersStatuses(array $ids): Collection
+    {
+        /** @var array{'result': array<int, string>, 'errors': array<int>} $response */
+        $response = $this->client->post('/v1/orders/statuses', [
+            'orders' => $ids,
+        ]);
+
+        return collect($response['result'])
+            ->map(function (string $status, int $orderId) {
+                return new OrderStatus([
+                    'orderid' => $orderId,
+                    'status' => $status,
+                ], $this);
+            })
+            ->values();
+    }
 }

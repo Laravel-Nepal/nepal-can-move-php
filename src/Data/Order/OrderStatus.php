@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace AchyutN\NCM\Data\Order;
 
 use AchyutN\NCM\Data\BaseData;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 /**
  * @phpstan-type OrderStatusData array{
  *      orderid: int,
  *      status: string,
- *      added_time: string,
- *      vendor_return: string
+ *      added_time: string|null,
+ *      vendor_return: bool|null
  * }
  *
  * @template-extends BaseData<OrderStatusData>
@@ -23,16 +23,16 @@ final class OrderStatus extends BaseData
 
     public string $status;
 
-    public Carbon $addedTime;
+    public ?Carbon $addedTime = null;
 
-    public bool $vendorReturn;
+    public ?bool $vendorReturn = null;
 
     protected function fromResponse(array $response): void
     {
         $this->orderid = $response['orderid'];
         $this->status = $response['status'];
-        $this->addedTime = Carbon::parse($response['added_time']);
+        $this->addedTime = isset($response['added_time']) ? Carbon::parse($response['added_time']) : null;
 
-        $this->vendorReturn = filter_var($response['vendor_return'], FILTER_VALIDATE_BOOLEAN);
+        $this->vendorReturn = isset($response['vendor_return']) ? filter_var($response['vendor_return'], FILTER_VALIDATE_BOOLEAN) : null;
     }
 }

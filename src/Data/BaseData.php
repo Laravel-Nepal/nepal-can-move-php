@@ -10,9 +10,9 @@ use AchyutN\NCM\NCM;
 abstract class BaseData
 {
     /** @param T $attributes */
-    public function __construct(protected array $attributes, protected NCM $ncm)
+    public function __construct(array $attributes, protected NCM $ncm)
     {
-        $this->fromResponse($this->attributes);
+        $this->fromResponse($attributes);
     }
 
     /** @param T $response */

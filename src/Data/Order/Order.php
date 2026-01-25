@@ -61,6 +61,7 @@ final class Order extends BaseData
 
     /**
      * @return Collection<int, OrderStatus>
+     *
      * @throws NCMException
      */
     public function getStatus(): Collection

@@ -48,6 +48,7 @@ trait OrderManager
      * Get order details by order ID.
      *
      * @return Collection<int, OrderStatus>
+     *
      * @throws NCMException
      */
     public function getOrderStatus(int $id): Collection
@@ -57,6 +58,6 @@ trait OrderManager
             'id' => $id,
         ]);
 
-        return collect($response)->map(fn ($status) => new OrderStatus($status, $this));
+        return collect($response)->map(fn ($status): OrderStatus => new OrderStatus($status, $this));
     }
 }

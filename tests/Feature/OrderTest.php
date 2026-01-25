@@ -67,6 +67,6 @@ it('returns collection of status', function () {
     $statusCollection = $ncm->getOrderStatus($order->orderid);
 
     expect($statusCollection)
-        ->toBeInstanceOf(\Illuminate\Support\Collection::class)
-        ->and($statusCollection->first())->toBeInstanceOf(\AchyutN\NCM\Data\Order\OrderStatus::class);
+        ->toBeInstanceOf(Illuminate\Support\Collection::class)
+        ->and($statusCollection->first())->toBeInstanceOf(AchyutN\NCM\Data\Order\OrderStatus::class);
 });

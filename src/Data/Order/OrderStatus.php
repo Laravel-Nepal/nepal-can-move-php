@@ -20,8 +20,11 @@ use Carbon\Carbon;
 final class OrderStatus extends BaseData
 {
     public int $orderid;
+
     public string $status;
+
     public Carbon $addedTime;
+
     public bool $vendorReturn;
 
     protected function fromResponse(array $response): void

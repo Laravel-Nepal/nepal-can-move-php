@@ -58,8 +58,8 @@ describe('order', function () {
             ->and($fetchedOrder->orderid)->toBe($order->orderid);
     });
 
-    it('returns collection of status', function () use ($ncm, $order) {
-        $statusCollection = $ncm->getOrderStatus($order->orderid);
+    it('returns collection of status', function () use ($order) {
+        $statusCollection = $order->getStatus();
 
         expect($statusCollection)
             ->toBeInstanceOf(Collection::class)

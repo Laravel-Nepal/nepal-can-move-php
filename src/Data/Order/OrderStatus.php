@@ -11,8 +11,8 @@ use Illuminate\Support\Carbon;
  * @phpstan-type OrderStatusData array{
  *      orderid: int,
  *      status: string,
- *      added_time: string|null,
- *      vendor_return: bool|null
+ *      added_time?: string|null,
+ *      vendor_return?: bool|null
  * }
  *
  * @template-extends BaseData<OrderStatusData>
@@ -33,6 +33,9 @@ final class OrderStatus extends BaseData
         $this->status = $response['status'];
         $this->addedTime = isset($response['added_time']) ? Carbon::parse($response['added_time']) : null;
 
-        $this->vendorReturn = $response['vendor_return'] ?? null;
+        if (isset($response['vendor_return'])) {
+            $vendorReturn = $response['vendor_return'];
+            $this->vendorReturn = is_bool($vendorReturn) ? $vendorReturn : null;
+        }
     }
 }

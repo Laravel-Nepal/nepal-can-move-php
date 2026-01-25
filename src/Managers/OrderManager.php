@@ -66,6 +66,9 @@ trait OrderManager
     /**
      * Get order status of multiple orders.
      *
+     * @param  array<int>  $ids
+     * @return Collection<int, OrderStatus>
+     *
      * @throws NCMException
      */
     public function getOrdersStatuses(array $ids): Collection
@@ -121,13 +124,13 @@ trait OrderManager
      * Fetches comments done by NCM for multiple orders.
      * This will return last 25 comments.
      *
-     * @return Collection<int, Collection<int, Comment>>
+     * @return Collection<int, Comment>
      *
      * @throws NCMException
      */
     public function getOrdersComments(): Collection
     {
-        /** @var array<CommentData>|array{'detail': string} $response */
+        /** @var array<CommentData> $response */
         $response = $this->client->get('/v1/order/getbulkcomments');
 
         if (isset($response['detail'])) {
@@ -135,6 +138,7 @@ trait OrderManager
         }
 
         return collect($response)
+            ->values()
             ->map(fn (array $comment): Comment => new Comment($comment, $this));
     }
 }

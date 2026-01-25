@@ -78,26 +78,33 @@ final class NCMClient
         $body = json_decode((string) $response->getBody(), true);
 
         if (is_null($body)) {
-            throw new NCMException("NepalCanMove API error",$response->getStatusCode());
+            throw new NCMException('NepalCanMove API error: '.$response->getReasonPhrase(), $response->getStatusCode());
         }
 
-        if (isset($body['Error'])) {
-            throw new NCMException($this->formatError($body['Error']), $response->getStatusCode());
+        $bodyArray = (array) $body;
+
+        if (! is_null($bodyArray['Error'])) {
+            throw new NCMException($this->formatError($bodyArray['Error']), $response->getStatusCode());
         }
 
-        throw new NCMException($body['detail'] ?? 'An unknown error occurred.', $response->getStatusCode());
+        throw new NCMException($this->formatError($bodyArray['detail'] ?? null), $response->getStatusCode());
     }
 
-    protected function formatError(array|string $error): string
+    private function formatError(mixed $error): string
     {
         if (is_string($error)) {
             return $error;
         }
 
-        return implode(', ', array_map(
-            fn ($key, string $val) => is_numeric($key) ? $val : "{$key}: {$val}",
-            array_keys($error),
-            $error
-        ));
+        if (is_array($error)) {
+            /** @var array<string, string> $error */
+            return implode(', ', array_map(
+                fn ($key, string $val): string => is_numeric($key) ? $val : "{$key}: {$val}",
+                array_keys($error),
+                $error
+            ));
+        }
+
+        return 'An unknown error occurred.';
     }
 }

@@ -10,12 +10,12 @@ use Illuminate\Support\Carbon;
 /**
  * @phpstan-type OrderData array{
  *      orderid: int,
- *      weight?: float,
+ *      weight: float|null,
  *      delivery_charge: float,
- *      delivery_type?: string,
- *      cod_charge?: float,
- *      active?: bool,
- *      delivered_date?: string
+ *      delivery_type: string|null,
+ *      cod_charge: float|null,
+ *      active: bool,
+ *      delivered_date: string|null
  * }
  *
  * @template-extends BaseData<OrderData>
@@ -30,7 +30,7 @@ final class Order extends BaseData
     /**
      * The weight of the order.
      */
-    public ?float $weight;
+    public ?float $weight = null;
 
     /**
      * The delivery charge for the order.
@@ -40,35 +40,43 @@ final class Order extends BaseData
     /**
      * The delivery type of the order.
      */
-    public ?string $deliveryType;
+    public ?string $deliveryType = null;
 
     /**
      * The cash on delivery charge for the order.
      */
-    public ?float $codCharge;
+    public ?float $codCharge = null;
 
     /**
      * Whether the order is active.
      */
-    public ?bool $active;
+    public ?bool $active = null;
 
     /**
      * The delivery date of the order.
      */
     public ?Carbon $deliveryDate = null;
 
-
-    /**
-     * Populate the object from the response array.
-     */
     protected function fromResponse(array $response): void
     {
         $this->orderid = $response['orderid'];
-        $this->weight = isset($response['weight']) ? (float) $response['weight'] : null;
         $this->deliveryCharge = (float) $response['delivery_charge'];
         $this->deliveryType = $response['delivery_type'] ?? null;
-        $this->codCharge = isset($response['cod_charge']) ? (float) $response['cod_charge'] : null;
-        $this->active = isset($response['active']) ? (bool) $response['active'] : null;
-        $this->deliveryDate = isset($response['delivered_date']) ? Carbon::parse($response['delivered_date']) : null;
+
+        if (! is_null($response['weight'])) {
+            $this->weight = (float) $response['weight'];
+        }
+
+        if (! is_null($response['cod_charge'])) {
+            $this->codCharge = (float) $response['cod_charge'];
+        }
+
+        if (array_key_exists('active', $response)) {
+            $this->active = $response['active'];
+        }
+
+        if (! is_null($response['delivered_date'])) {
+            $this->deliveryDate = Carbon::parse($response['delivered_date']);
+        }
     }
 }

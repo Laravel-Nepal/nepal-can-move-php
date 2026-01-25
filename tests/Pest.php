@@ -12,7 +12,7 @@ function ncm(): NCM
 {
     $apiKey = getenv('NCM_TOKEN') ?: 'fake-token';
 
-    if (!$apiKey) {
+    if (! $apiKey) {
         throw new NCMException('NCM API token is not set in testing environment.');
     }
 

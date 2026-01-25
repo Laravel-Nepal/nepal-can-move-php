@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use AchyutN\NCM\Data\Order\CreateOrderRequest;
-use AchyutN\NCM\Data\Order\Order;
 use AchyutN\NCM\Exceptions\NCMException;
 
 beforeEach(function () {

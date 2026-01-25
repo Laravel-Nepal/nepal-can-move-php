@@ -12,7 +12,6 @@ use Illuminate\Support\Traits\ForwardsCalls;
 final class NCM
 {
     use ForwardsCalls;
-    use OrderManager;
 
     /**
      * The NepalCanMove client instance.

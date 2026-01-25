@@ -83,7 +83,7 @@ final class NCMClient
 
         $bodyArray = (array) $body;
 
-        if (! is_null($bodyArray['Error'])) {
+        if (! is_null($bodyArray['Error'] ?? null)) {
             throw new NCMException($this->formatError($bodyArray['Error']), $response->getStatusCode());
         }
 

@@ -28,6 +28,7 @@ it('fails to create an order with invalid branch', function () {
     ));
 });
 
+/** @throws NCMException */
 describe('order', function () {
     $ncm = ncm();
 

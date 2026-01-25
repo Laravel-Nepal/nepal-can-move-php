@@ -4,31 +4,10 @@ declare(strict_types=1);
 
 use AchyutN\NCM\Data\Order\CreateOrderRequest;
 use AchyutN\NCM\Data\Order\Order;
-use AchyutN\NCM\NCM;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use AchyutN\NCM\Exceptions\NCMException;
 
-it('can create an order with mocked response', function () {
-    $mockBody = json_encode([
-        'message' => 'Order created successfully',
-        'orderid' => 747,
-        'weight' => 1.00,
-        'delivery_charge' => 199.00,
-        'delivery_type' => 'Door2Door',
-    ]);
-
-    $mock = new MockHandler([
-        new Response(200, [], $mockBody),
-    ]);
-
-    $handlerStack = HandlerStack::create($mock);
-    $guzzle = new Client(['handler' => $handlerStack]);
-
-    $ncm = new NCM('fake-token', 'https://demo.nepalcanmove.com/api/', $guzzle);
-
-    $request = new CreateOrderRequest(
+beforeEach(function () {
+    $this->createOrderRequest = new CreateOrderRequest(
         name: 'Achyut Neupane',
         phone: '9860323771',
         codCharge: '150',
@@ -38,11 +17,29 @@ it('can create an order with mocked response', function () {
         package: 'Books',
         vrefId: 'VREF12345',
         instruction: 'Handle with care',
+        deliveryType: 'Door2Door',
+        weight: '1',
     );
 
-    $order = $ncm->createOrder($request);
+    if (getenv('NCM_TOKEN') === false) {
+        $this->markTestSkipped('NCM_TOKEN not defined in ENV.');
+    }
+});
 
-    expect($order)->toBeInstanceOf(Order::class)
-        ->and($order->orderid)->toBe(747)
-        ->and($order->deliveryCharge)->toBe(199.0);
+it('can create an order on demo environment', function () {
+    $ncm = ncm();
+
+    $order = $ncm->createOrder($this->createOrderRequest);
+
+    expect($order)->toBeValidOrder();
+});
+
+it('fails to create an order with invalid branch', function () {
+    $ncm = ncm();
+
+    $this->createOrderRequest->branch = 'INVALID_BRANCH_NAME';
+
+    $this->expectException(NCMException::class);
+
+    $ncm->createOrder($this->createOrderRequest);
 });

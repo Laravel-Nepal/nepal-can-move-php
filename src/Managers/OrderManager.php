@@ -9,7 +9,6 @@ use AchyutN\NCM\Data\Order\CreateOrderRequest;
 use AchyutN\NCM\Data\Order\Order;
 use AchyutN\NCM\Data\Order\OrderStatus;
 use AchyutN\NCM\Exceptions\NCMException;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 /**
@@ -77,12 +76,10 @@ trait OrderManager
         ]);
 
         return collect($response['result'])
-            ->map(function (string $status, int $orderId) {
-                return new OrderStatus([
-                    'orderid' => $orderId,
-                    'status' => $status,
-                ], $this);
-            })
+            ->map(fn (string $status, int $orderId): OrderStatus => new OrderStatus([
+                'orderid' => $orderId,
+                'status' => $status,
+            ], $this))
             ->values();
     }
 
@@ -107,6 +104,7 @@ trait OrderManager
      * Fetches comments of an order.
      *
      * @return Collection<int, Comment>
+     *
      * @throws NCMException
      */
     public function getOrderComments(int $id): Collection
@@ -124,6 +122,7 @@ trait OrderManager
      * This will return last 25 comments.
      *
      * @return Collection<int, Collection<int, Comment>>
+     *
      * @throws NCMException
      */
     public function getOrdersComments(): Collection

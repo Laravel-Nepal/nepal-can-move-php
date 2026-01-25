@@ -93,7 +93,7 @@ describe('order', function () {
             ->toBeInstanceOf(Comment::class);
     });
 
-    it('can fetch last 25 comments of orders', function () use ($ncm, $order) {
+    it('can fetch last 25 comments of orders', function () use ($ncm) {
         $comments = $ncm->getOrdersComments();
 
         if ($comments->isEmpty()) {

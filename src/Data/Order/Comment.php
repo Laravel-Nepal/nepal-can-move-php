@@ -21,11 +21,13 @@ use Illuminate\Support\Carbon;
 final class Comment extends BaseData
 {
     public int $id;
+
     public int $orderid;
 
     public string $comments;
 
     public string $addedBy;
+
     public Carbon $addedTime;
 
     protected function fromResponse(array $response): void

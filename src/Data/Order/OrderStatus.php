@@ -33,6 +33,6 @@ final class OrderStatus extends BaseData
         $this->status = $response['status'];
         $this->addedTime = isset($response['added_time']) ? Carbon::parse($response['added_time']) : null;
 
-        $this->vendorReturn = isset($response['vendor_return']) ? filter_var($response['vendor_return'], FILTER_VALIDATE_BOOLEAN) : null;
+        $this->vendorReturn = $response['vendor_return'] ?? null;
     }
 }

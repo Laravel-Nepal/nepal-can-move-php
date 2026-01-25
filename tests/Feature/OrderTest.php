@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use AchyutN\NCM\Data\Order\Comment;
 use AchyutN\NCM\Data\Order\CreateOrderRequest;
 use AchyutN\NCM\Data\Order\OrderStatus;
 use AchyutN\NCM\Exceptions\NCMException;
@@ -71,6 +72,16 @@ describe('order', function () {
         $commentResponse = $order->addComment('This is a test comment.');
 
         expect($commentResponse)->toBeTrue();
+    });
+
+    it('can fetch comments of an order', function () use ($order) {
+        $comments = $order->getComments();
+
+        expect($comments)
+            ->toBeInstanceOf(Collection::class)
+            ->toHaveCount(1)
+            ->and($comments->first())
+            ->toBeInstanceOf(Comment::class);
     });
 
     it('can fetch statuses for multiple orders', function () use ($ncm, $order) {

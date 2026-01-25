@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AchyutN\NCM\Managers;
 
+use AchyutN\NCM\Data\Order\Comment;
 use AchyutN\NCM\Data\Order\CreateOrderRequest;
 use AchyutN\NCM\Data\Order\Order;
 use AchyutN\NCM\Data\Order\OrderStatus;
@@ -13,6 +14,7 @@ use Illuminate\Support\Collection;
 /**
  * @phpstan-import-type OrderData from Order
  * @phpstan-import-type OrderStatusData from OrderStatus
+ * @phpstan-import-type CommentData from Comment
  */
 trait OrderManager
 {
@@ -59,6 +61,22 @@ trait OrderManager
         ]);
 
         return collect($response)->map(fn ($status): OrderStatus => new OrderStatus($status, $this));
+    }
+
+    /**
+     * Fetches comments of an order.
+     *
+     * @return Collection<int, Comment>
+     * @throws NCMException
+     */
+    public function getOrderComments(int $id): Collection
+    {
+        /** @var array<CommentData> $response */
+        $response = $this->client->get('/v1/order/comment', [
+            'id' => $id,
+        ]);
+
+        return collect($response)->map(fn (array $comment): Comment => new Comment($comment, $this));
     }
 
     /**

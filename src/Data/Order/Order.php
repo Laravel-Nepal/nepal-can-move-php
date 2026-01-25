@@ -70,6 +70,18 @@ final class Order extends BaseData
     }
 
     /**
+     * Get comments of the order.
+     *
+     * @return Collection<int, Comment>
+     *
+     * @throws NCMException
+     */
+    public function getComments(): Collection
+    {
+        return $this->ncm->getOrderComments($this->orderid);
+    }
+
+    /**
      * Add a comment to the order.
      */
     public function addComment(string $comment): bool

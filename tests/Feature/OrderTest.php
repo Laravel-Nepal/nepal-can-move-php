@@ -55,4 +55,18 @@ it('can fetch an order by ID', function () {
     expect($fetchedOrder)->toBeValidOrder()
         ->and($fetchedOrder->orderid)->toBe($order->orderid);
 
-})->only();
+});
+
+it('returns collection of status', function () {
+    $ncm = ncm();
+
+    $order = $ncm->createOrder($this->createOrderRequest);
+
+    expect($order)->toBeValidOrder();
+
+    $statusCollection = $ncm->getOrderStatus($order->orderid);
+
+    expect($statusCollection)
+        ->toBeInstanceOf(\Illuminate\Support\Collection::class)
+        ->and($statusCollection->first())->toBeInstanceOf(\AchyutN\NCM\Data\Order\OrderStatus::class);
+});

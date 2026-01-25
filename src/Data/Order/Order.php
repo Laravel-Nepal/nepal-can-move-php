@@ -60,23 +60,22 @@ final class Order extends BaseData
     protected function fromResponse(array $response): void
     {
         $this->orderid = $response['orderid'];
-        $this->deliveryCharge = (float) $response['delivery_charge'];
+        $this->deliveryCharge = (float) ($response['delivery_charge'] ?? 0);
         $this->deliveryType = $response['delivery_type'] ?? null;
 
-        if (! is_null($response['weight'])) {
-            $this->weight = (float) $response['weight'];
+        if (isset($response['weight'])) {
+            $weight = $response['weight'];
+            $this->weight = is_numeric($weight) ? (float) $weight : null;
         }
 
-        if (! is_null($response['cod_charge'])) {
-            $this->codCharge = (float) $response['cod_charge'];
+        if (isset($response['cod_charge'])) {
+            $cod = $response['cod_charge'];
+            $this->codCharge = is_numeric($cod) ? (float) $cod : null;
         }
 
-        if (array_key_exists('active', $response)) {
+        if (isset($response['active'])) {
             $this->active = $response['active'];
         }
-
-        if (! is_null($response['delivered_date'])) {
-            $this->deliveryDate = Carbon::parse($response['delivered_date']);
-        }
+        $this->deliveryDate = isset($response['delivered_date']) ? Carbon::parse($response['delivered_date']) : null;
     }
 }

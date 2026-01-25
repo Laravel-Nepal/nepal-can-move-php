@@ -69,6 +69,14 @@ final class Order extends BaseData
         return $this->ncm->getOrderStatus($this->orderid);
     }
 
+    /**
+     * Add a comment to the order.
+     */
+    public function addComment(string $comment): bool
+    {
+        return $this->ncm->addOrderComment($this->orderid, $comment);
+    }
+
     protected function fromResponse(array $response): void
     {
         $this->orderid = $response['orderid'];

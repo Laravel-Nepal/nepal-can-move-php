@@ -70,3 +70,15 @@ it('returns collection of status', function () {
         ->toBeInstanceOf(Illuminate\Support\Collection::class)
         ->and($statusCollection->first())->toBeInstanceOf(AchyutN\NCM\Data\Order\OrderStatus::class);
 });
+
+it('can add comment to an order', function () {
+    $ncm = ncm();
+
+    $order = $ncm->createOrder($this->createOrderRequest);
+
+    expect($order)->toBeValidOrder();
+
+    $commentResponse = $order->addComment('This is a test comment.');
+
+    expect($commentResponse)->toBeTrue();
+});

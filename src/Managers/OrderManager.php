@@ -60,4 +60,21 @@ trait OrderManager
 
         return collect($response)->map(fn ($status): OrderStatus => new OrderStatus($status, $this));
     }
+
+    /**
+     * Add comment to an order.
+     */
+    public function addOrderComment(int $id, string $comment): bool
+    {
+        try {
+            $this->client->post('/v1/comment', [
+                'orderid' => $id,
+                'comments' => $comment,
+            ]);
+        } catch (NCMException) {
+            return false;
+        }
+
+        return true;
+    }
 }

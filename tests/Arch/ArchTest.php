@@ -8,9 +8,11 @@ arch('no dd, dump, or ray calls')
     ->not
     ->toBeUsed();
 
-arch('all classes are final')
+arch('all non-abstract classes are final')
     ->expect('AchyutN\NCM')
     ->classes()
+    ->not
+    ->abstractClasses()
     ->toBeFinal();
 
 arch('all enums are Enum')

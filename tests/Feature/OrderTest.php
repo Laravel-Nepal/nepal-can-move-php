@@ -3,10 +3,35 @@
 declare(strict_types=1);
 
 use AchyutN\NCM\Data\Order\CreateOrderRequest;
+use AchyutN\NCM\Data\Order\OrderStatus;
 use AchyutN\NCM\Exceptions\NCMException;
+use Illuminate\Support\Collection;
 
 beforeEach(function () {
-    $this->createOrderRequest = new CreateOrderRequest(
+    if (getenv('NCM_TOKEN') === false) {
+        $this->markTestSkipped('NCM_TOKEN not defined in ENV.');
+    }
+});
+
+it('fails to create an order with invalid branch', function () {
+    $ncm = ncm();
+
+    $this->expectException(NCMException::class);
+
+    $ncm->createOrder(new CreateOrderRequest(
+        name: 'INVALID_NAME',
+        phone: 'INVALID_NUMBER',
+        codCharge: 'INVALID_CHARGE',
+        address: 'INVALID_ADDRESS',
+        fbranch: 'INVALID_BRANCH',
+        branch: 'INVALID_BRANCH',
+    ));
+});
+
+describe('order', function () {
+    $ncm = ncm();
+
+    $createOrderRequest = new CreateOrderRequest(
         name: 'Achyut Neupane',
         phone: '9860323771',
         codCharge: '150',
@@ -20,65 +45,30 @@ beforeEach(function () {
         weight: '1',
     );
 
-    if (getenv('NCM_TOKEN') === false) {
-        $this->markTestSkipped('NCM_TOKEN not defined in ENV.');
-    }
-});
+    $order = $ncm->createOrder($createOrderRequest);
 
-it('fails to create an order with invalid branch', function () {
-    $ncm = ncm();
+    it('can create an order', function () use ($order) {
+        expect($order)->toBeValidOrder();
+    });
 
-    $this->createOrderRequest->branch = 'INVALID_BRANCH_NAME';
+    it('can fetch an order by ID', function () use ($ncm, $order) {
+        $fetchedOrder = $ncm->getOrder($order->orderid);
 
-    $this->expectException(NCMException::class);
+        expect($fetchedOrder)->toBeValidOrder()
+            ->and($fetchedOrder->orderid)->toBe($order->orderid);
+    });
 
-    $ncm->createOrder($this->createOrderRequest);
-});
+    it('returns collection of status', function () use ($ncm, $order) {
+        $statusCollection = $ncm->getOrderStatus($order->orderid);
 
-it('can create an order on demo environment', function () {
-    $ncm = ncm();
+        expect($statusCollection)
+            ->toBeInstanceOf(Collection::class)
+            ->and($statusCollection->first())->toBeInstanceOf(OrderStatus::class);
+    });
 
-    $order = $ncm->createOrder($this->createOrderRequest);
+    it('can add comment to an order', function () use ($order) {
+        $commentResponse = $order->addComment('This is a test comment.');
 
-    expect($order)->toBeValidOrder();
-});
-
-it('can fetch an order by ID', function () {
-    $ncm = ncm();
-
-    $order = $ncm->createOrder($this->createOrderRequest);
-
-    expect($order)->toBeValidOrder();
-
-    $fetchedOrder = $ncm->getOrder($order->orderid);
-
-    expect($fetchedOrder)->toBeValidOrder()
-        ->and($fetchedOrder->orderid)->toBe($order->orderid);
-
-});
-
-it('returns collection of status', function () {
-    $ncm = ncm();
-
-    $order = $ncm->createOrder($this->createOrderRequest);
-
-    expect($order)->toBeValidOrder();
-
-    $statusCollection = $ncm->getOrderStatus($order->orderid);
-
-    expect($statusCollection)
-        ->toBeInstanceOf(Illuminate\Support\Collection::class)
-        ->and($statusCollection->first())->toBeInstanceOf(AchyutN\NCM\Data\Order\OrderStatus::class);
-});
-
-it('can add comment to an order', function () {
-    $ncm = ncm();
-
-    $order = $ncm->createOrder($this->createOrderRequest);
-
-    expect($order)->toBeValidOrder();
-
-    $commentResponse = $order->addComment('This is a test comment.');
-
-    expect($commentResponse)->toBeTrue();
+        expect($commentResponse)->toBeTrue();
+    });
 });

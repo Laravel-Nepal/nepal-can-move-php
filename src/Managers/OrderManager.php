@@ -9,6 +9,7 @@ use AchyutN\NCM\Data\Order\CreateOrderRequest;
 use AchyutN\NCM\Data\Order\Order;
 use AchyutN\NCM\Data\Order\OrderStatus;
 use AchyutN\NCM\Exceptions\NCMException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 /**
@@ -64,19 +65,25 @@ trait OrderManager
     }
 
     /**
-     * Fetches comments of an order.
+     * Get order status of multiple orders.
      *
-     * @return Collection<int, Comment>
      * @throws NCMException
      */
-    public function getOrderComments(int $id): Collection
+    public function getOrdersStatuses(array $ids): Collection
     {
-        /** @var array<CommentData> $response */
-        $response = $this->client->get('/v1/order/comment', [
-            'id' => $id,
+        /** @var array{'result': array<int, string>, 'errors': array<int>} $response */
+        $response = $this->client->post('/v1/orders/statuses', [
+            'orders' => $ids,
         ]);
 
-        return collect($response)->map(fn (array $comment): Comment => new Comment($comment, $this));
+        return collect($response['result'])
+            ->map(function (string $status, int $orderId) {
+                return new OrderStatus([
+                    'orderid' => $orderId,
+                    'status' => $status,
+                ], $this);
+            })
+            ->values();
     }
 
     /**
@@ -97,24 +104,38 @@ trait OrderManager
     }
 
     /**
-     * Get order status of multiple orders.
+     * Fetches comments of an order.
      *
+     * @return Collection<int, Comment>
      * @throws NCMException
      */
-    public function getOrdersStatuses(array $ids): Collection
+    public function getOrderComments(int $id): Collection
     {
-        /** @var array{'result': array<int, string>, 'errors': array<int>} $response */
-        $response = $this->client->post('/v1/orders/statuses', [
-            'orders' => $ids,
+        /** @var array<CommentData> $response */
+        $response = $this->client->get('/v1/order/comment', [
+            'id' => $id,
         ]);
 
-        return collect($response['result'])
-            ->map(function (string $status, int $orderId) {
-                return new OrderStatus([
-                    'orderid' => $orderId,
-                    'status' => $status,
-                ], $this);
-            })
-            ->values();
+        return collect($response)->map(fn (array $comment): Comment => new Comment($comment, $this));
+    }
+
+    /**
+     * Fetches comments done by NCM for multiple orders.
+     * This will return last 25 comments.
+     *
+     * @return Collection<int, Collection<int, Comment>>
+     * @throws NCMException
+     */
+    public function getOrdersComments(): Collection
+    {
+        /** @var array<CommentData>|array{'detail': string} $response */
+        $response = $this->client->get('/v1/order/getbulkcomments');
+
+        if (isset($response['detail'])) {
+            return collect();
+        }
+
+        return collect($response)
+            ->map(fn (array $comment): Comment => new Comment($comment, $this));
     }
 }

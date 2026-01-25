@@ -68,6 +68,15 @@ describe('order', function () {
             ->and($statusCollection->first())->toBeInstanceOf(OrderStatus::class);
     });
 
+    it('can fetch statuses for multiple orders', function () use ($ncm, $order) {
+        $statuses = $ncm->getOrdersStatuses([$order->orderid]);
+
+        expect($statuses)
+            ->toBeInstanceOf(Collection::class)
+            ->and($statuses->first())
+            ->toBeInstanceOf(OrderStatus::class);
+    });
+
     it('can add comment to an order', function () use ($order) {
         $commentResponse = $order->addComment('I created this test comment from PHP SDK.');
 
@@ -84,12 +93,16 @@ describe('order', function () {
             ->toBeInstanceOf(Comment::class);
     });
 
-    it('can fetch statuses for multiple orders', function () use ($ncm, $order) {
-        $statuses = $ncm->getOrdersStatuses([$order->orderid]);
+    it('can fetch last 25 comments of orders', function () use ($ncm, $order) {
+        $comments = $ncm->getOrdersComments();
 
-        expect($statuses)
-            ->toBeInstanceOf(Collection::class)
-            ->and($statuses->first())
-            ->toBeInstanceOf(OrderStatus::class);
+        if ($comments->isEmpty()) {
+            $this->markTestSkipped('No comments found for any orders.');
+        } else {
+            expect($comments)
+                ->toBeInstanceOf(Collection::class)
+                ->and($comments->first())
+                ->toBeInstanceOf(Comment::class);
+        }
     });
 });

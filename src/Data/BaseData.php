@@ -6,20 +6,17 @@ namespace AchyutN\NCM\Data;
 
 use AchyutN\NCM\NCM;
 
+/** @template T of array */
 abstract class BaseData
 {
-    public function __construct(protected array $attributes, protected NCM $ncm) // @phpstan-ignore-line
+    /** @param T $attributes */
+    public function __construct(protected array $attributes, protected NCM $ncm)
     {
-        $this->fill();
+        $this->fromResponse($this->attributes);
     }
 
-    protected function fill(): void
-    {
-        foreach ($this->attributes as $key => $value) {
-            $key = $this->camelCase($key);
-            $this->{$key} = $value;
-        }
-    }
+    /** @param T $response */
+    abstract protected function fromResponse(array $response): void;
 
     protected function camelCase(string $key): string
     {

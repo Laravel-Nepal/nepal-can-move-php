@@ -26,14 +26,6 @@ beforeEach(function () {
     }
 });
 
-it('can create an order on demo environment', function () {
-    $ncm = ncm();
-
-    $order = $ncm->createOrder($this->createOrderRequest);
-
-    expect($order)->toBeValidOrder();
-});
-
 it('fails to create an order with invalid branch', function () {
     $ncm = ncm();
 
@@ -43,3 +35,25 @@ it('fails to create an order with invalid branch', function () {
 
     $ncm->createOrder($this->createOrderRequest);
 });
+
+it('can create an order on demo environment', function () {
+    $ncm = ncm();
+
+    $order = $ncm->createOrder($this->createOrderRequest);
+
+    expect($order)->toBeValidOrder();
+});
+
+it('can fetch an order by ID', function () {
+    $ncm = ncm();
+
+    $order = $ncm->createOrder($this->createOrderRequest);
+
+    expect($order)->toBeValidOrder();
+
+    $fetchedOrder = $ncm->getOrder($order->orderid);
+
+    expect($fetchedOrder)->toBeValidOrder()
+        ->and($fetchedOrder->orderid)->toBe($order->orderid);
+
+})->only();

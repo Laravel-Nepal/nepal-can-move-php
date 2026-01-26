@@ -11,6 +11,20 @@ enum DeliveryType: string
     case DoorToBranch = 'Door2Branch';
     case BranchToBranch = 'Branch2Branch';
 
+    /**
+     * Map the order creation response to DeliveryType enum
+     */
+    public static function fromOrderCreateValue(string $value): ?self
+    {
+        return match ($value) {
+            'Pickup/Collect' => self::DoorToDoor,
+            'Send' => self::BranchToDoor,
+            'D2B' => self::DoorToBranch,
+            'B2B' => self::BranchToBranch,
+            default => null,
+        };
+    }
+
     public function getLabel(): string
     {
         return match ($this) {
@@ -50,19 +64,5 @@ enum DeliveryType: string
     public function toOrderCreateValue(): string
     {
         return $this->value;
-    }
-
-    /**
-     * Map the order creation response to DeliveryType enum
-     */
-    public static function fromOrderCreateValue(string $value): ?self
-    {
-        return match ($value) {
-            'Pickup/Collect' => self::DoorToDoor,
-            'Send' => self::BranchToDoor,
-            'D2B' => self::DoorToBranch,
-            'B2B' => self::BranchToBranch,
-            default => null,
-        };
     }
 }

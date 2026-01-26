@@ -93,7 +93,7 @@ final class Branch extends BaseData
         $this->id = $response['pk'];
         $this->code = $response['code'];
         $this->name = $response['name'];
-        [$latitude, $longitude] = array_map('trim', explode(',', $response['geocode']));
+        [$latitude, $longitude] = array_map(trim(...), explode(',', $response['geocode']));
         $this->coordinates = [
             'latitude' => (float) trim($latitude),
             'longitude' => (float) trim($longitude),
@@ -103,7 +103,7 @@ final class Branch extends BaseData
         $this->phone = $response['phone'];
         $this->phone2 = $response['phone2'] ?? null;
         $this->branchType = $response['branch_type'];
-        $this->areasCovered = isset($response['areas_covered']) ? array_map('trim', explode(',', $response['areas_covered'])) : [];
+        $this->areasCovered = isset($response['areas_covered']) ? array_map(trim(...), explode(',', $response['areas_covered'])) : [];
         $this->provinceName = $response['province_name'];
         $this->districtName = $response['district_name'];
     }

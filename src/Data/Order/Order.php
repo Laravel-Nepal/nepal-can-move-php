@@ -82,9 +82,18 @@ final class Order extends BaseData
     }
 
     /**
+     * Add a comment to the order.
+     */
+    public function addComment(string $comment): bool
+    {
+        return $this->ncm->addOrderComment($this->orderid, $comment);
+    }
+
+    /**
      * Mark the order for return.
      *
-     * @param  string|null  $reason  The reason for return (optional).
+     * @param string|null $reason The reason for return (optional).
+     * @throws NCMException
      */
     public function return(?string $reason = null): bool
     {
@@ -93,6 +102,7 @@ final class Order extends BaseData
 
     /**
      * Mark the order for exchange.
+     * @throws NCMException
      */
     public function exchange(): bool
     {
@@ -100,11 +110,12 @@ final class Order extends BaseData
     }
 
     /**
-     * Add a comment to the order.
+     * Mark an order for redirect to another customer.
+     * @throws NCMException
      */
-    public function addComment(string $comment): bool
+    public function redirect(RedirectOrderRequest $redirectOrderRequest): bool
     {
-        return $this->ncm->addOrderComment($this->orderid, $comment);
+        return $this->ncm->redirectOrder($redirectOrderRequest);
     }
 
     protected function fromResponse(array $response): void

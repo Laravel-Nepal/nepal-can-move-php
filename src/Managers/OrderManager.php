@@ -8,6 +8,7 @@ use AchyutN\NCM\Data\Order\Comment;
 use AchyutN\NCM\Data\Order\CreateOrderRequest;
 use AchyutN\NCM\Data\Order\Order;
 use AchyutN\NCM\Data\Order\OrderStatus;
+use AchyutN\NCM\Data\Order\RedirectOrderRequest;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 
@@ -146,34 +147,41 @@ trait OrderManager
      * Mark an order for return process.
      *
      * @param  string|null  $reason  Reason for returning the order
+     *
+     * @throws NCMException
      */
     public function returnOrder(int $id, ?string $reason = null): bool
     {
-        try {
-            $this->client->post('/v2/vendor/order/return', [
-                'pk' => $id,
-                'comment' => $reason,
-            ]);
-
-        } catch (NCMException) {
-            return false;
-        }
+        $this->client->post('/v2/vendor/order/return', [
+            'pk' => $id,
+            'comment' => $reason,
+        ]);
 
         return true;
     }
 
     /**
      * Mark an order for exchange process.
+     *
+     * @throws NCMException
      */
-    public function exchangeOrder(int $id): bool
+    public function exchangeOrder(int $id): true
     {
-        try {
-            $this->client->post('/v2/vendor/order/exchange-create', [
-                'pk' => $id,
-            ]);
-        } catch (NCMException) {
-            return false;
-        }
+        $this->client->post('/v2/vendor/order/exchange-create', [
+            'pk' => $id,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * Mark an order for redirect to another customer.
+     *
+     * @throws NCMException
+     */
+    public function redirectOrder(RedirectOrderRequest $redirectOrderRequest): bool
+    {
+        $this->client->post('/v2/vendor/order/redirect', $redirectOrderRequest->toArray());
 
         return true;
     }

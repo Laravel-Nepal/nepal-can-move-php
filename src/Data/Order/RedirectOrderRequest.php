@@ -11,9 +11,9 @@ final class RedirectOrderRequest
         public string $name,
         public string $phone,
         public string $address,
-        public ?string $vrefId,
-        public string $branch,
-        public string $codCharge,
+        public ?string $orderIdentifier,
+        public ?int $destinationBranchId,
+        public ?float $codCharge,
     ) {}
 
     /**
@@ -26,8 +26,8 @@ final class RedirectOrderRequest
             'name' => $this->name,
             'phone' => $this->phone,
             'address' => $this->address,
-            'vendorOrderid' => $this->vrefId,
-            'destination' => $this->branch,
+            'vendorOrderid' => $this->orderIdentifier,
+            'destination' => $this->destinationBranchId,
             'cod_charge' => $this->codCharge,
         ];
     }

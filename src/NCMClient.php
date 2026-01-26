@@ -99,13 +99,11 @@ final class NCMClient
         if (is_array($error)) {
             /** @var array<string, mixed> $error */
             return implode(', ', array_map(
-                function ($key, mixed $val): string {
-                    return (string) match (true) {
-                        is_array($val) => $key.': '.implode(', ', $val),
-                        is_object($val) => json_encode($val),
-                        is_string($val), is_numeric($val) => "{$key}: {$val}",
-                        default => 'Unexpected error format',
-                    };
+                fn ($key, mixed $val): string => (string) match (true) {
+                    is_array($val) => $key.': '.implode(', ', $val),
+                    is_object($val) => json_encode($val),
+                    is_string($val), is_numeric($val) => "{$key}: {$val}",
+                    default => 'Unexpected error format',
                 },
 
                 array_keys($error),

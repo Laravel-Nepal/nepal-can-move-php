@@ -7,4 +7,5 @@ namespace AchyutN\NCM\Managers;
 trait HasManagers
 {
     use OrderManager;
+    use TicketManager;
 }

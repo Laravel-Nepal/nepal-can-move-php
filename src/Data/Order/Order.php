@@ -92,7 +92,8 @@ final class Order extends BaseData
     /**
      * Mark the order for return.
      *
-     * @param string|null $reason The reason for return (optional).
+     * @param  string|null  $reason  The reason for return (optional).
+     *
      * @throws NCMException
      */
     public function return(?string $reason = null): bool
@@ -102,6 +103,7 @@ final class Order extends BaseData
 
     /**
      * Mark the order for exchange.
+     *
      * @throws NCMException
      */
     public function exchange(): bool
@@ -111,6 +113,7 @@ final class Order extends BaseData
 
     /**
      * Mark an order for redirect to another customer.
+     *
      * @throws NCMException
      */
     public function redirect(RedirectOrderRequest $redirectOrderRequest): bool

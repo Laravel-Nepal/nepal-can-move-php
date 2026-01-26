@@ -2,20 +2,13 @@
 
 declare(strict_types=1);
 
+use AchyutN\NCM\Enums\TicketType;
 use AchyutN\NCM\Exceptions\NCMException;
-
-it('throws an exception on wrong ticket type', function () {
-    $ncm = ncm();
-
-    $this->expectException(NCMException::class);
-
-    $ncm->createSupportTicket('InvalidType', 'This is error ticket.');
-});
 
 it('can create a support ticket', function () {
     $ncm = ncm();
 
-    $result = $ncm->createSupportTicket('General', 'This is a test support ticket created from SDK.');
+    $result = $ncm->createSupportTicket(TicketType::General, 'This is a test support ticket created from SDK.');
 
     expect($result)->toBeTrue();
 });

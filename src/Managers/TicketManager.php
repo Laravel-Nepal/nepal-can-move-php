@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AchyutN\NCM\Managers;
 
+use AchyutN\NCM\Enums\TicketType;
 use AchyutN\NCM\Exceptions\NCMException;
 
 trait TicketManager
@@ -13,10 +14,10 @@ trait TicketManager
      *
      * @throws NCMException
      */
-    public function createSupportTicket(string $type, string $message): bool
+    public function createSupportTicket(TicketType $ticketType, string $message): bool
     {
         $this->client->post('/v2/vendor/ticket/create', [
-            'ticket_type' => $type,
+            'ticket_type' => $ticketType->value,
             'message' => $message,
         ]);
 

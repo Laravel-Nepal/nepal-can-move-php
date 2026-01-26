@@ -17,7 +17,7 @@ final class CreateOrderRequest
         public string $branch,
         public ?string $phone2 = '',
         public ?string $package = '',
-        public ?string $vrefId = '',
+        public ?string $orderIdentifier = '',
         public ?string $instruction = '',
         public DeliveryType $deliveryType = DeliveryType::DoorToDoor,
         public string $weight = '1'
@@ -37,7 +37,7 @@ final class CreateOrderRequest
             'fbranch' => $this->fbranch,
             'branch' => $this->branch,
             'package' => $this->package,
-            'vref_id' => $this->vrefId,
+            'vref_id' => $this->orderIdentifier,
             'instruction' => $this->instruction,
             'delivery_type' => $this->deliveryType->toOrderCreateValue(),
             'weight' => $this->weight,

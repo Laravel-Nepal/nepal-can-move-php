@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Data\Order\Comment;
-use AchyutN\NCM\Data\Order\CreateOrderRequest;
-use AchyutN\NCM\Data\Order\OrderStatus;
+use AchyutN\NCM\Data\Comment;
+use AchyutN\NCM\Data\CreateOrderRequest;
+use AchyutN\NCM\Data\OrderStatus;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 

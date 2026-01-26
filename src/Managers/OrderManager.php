@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AchyutN\NCM\Managers;
 
-use AchyutN\NCM\Data\Order\Comment;
-use AchyutN\NCM\Data\Order\CreateOrderRequest;
-use AchyutN\NCM\Data\Order\Order;
-use AchyutN\NCM\Data\Order\OrderStatus;
-use AchyutN\NCM\Data\Order\RedirectOrderRequest;
+use AchyutN\NCM\Data\Comment;
+use AchyutN\NCM\Data\CreateOrderRequest;
+use AchyutN\NCM\Data\Order;
+use AchyutN\NCM\Data\OrderStatus;
+use AchyutN\NCM\Data\RedirectOrderRequest;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 

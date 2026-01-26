@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data\Order;
+namespace AchyutN\NCM\Data;
 
-use AchyutN\NCM\Data\BaseData;
 use Illuminate\Support\Carbon;
 
 /**

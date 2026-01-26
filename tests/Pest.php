@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Data\Order\Order;
+use AchyutN\NCM\Data\Order;
 use AchyutN\NCM\Exceptions\NCMException;
 use AchyutN\NCM\NCM;
 

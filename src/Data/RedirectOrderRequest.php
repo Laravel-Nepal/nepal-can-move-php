@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data\Order;
+namespace AchyutN\NCM\Data;
 
 final class RedirectOrderRequest
 {

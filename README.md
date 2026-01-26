@@ -19,7 +19,7 @@ Install the package via Composer:
 composer require achyutn/nepal-can-move
 ```
 
-Publish the configuration file:
+*(Optional)* Publish the configuration file:
 
 ```bash
 php artisan vendor:publish --tag="nepal-can-move"

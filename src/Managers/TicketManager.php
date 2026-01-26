@@ -44,4 +44,16 @@ trait TicketManager
 
         return $response['ticket'];
     }
+
+    /**
+     * Close a ticket by its ID.
+     *
+     * @throws NCMException
+     */
+    public function closeTicket(int $ticketId): bool
+    {
+        $this->client->post('/v2/vendor/ticket/close/'.$ticketId);
+
+        return true;
+    }
 }

@@ -6,15 +6,15 @@ namespace AchyutN\NCM\Enums;
 
 enum DeliveryType: string
 {
-    case PickupOrCollect = 'Pickup/Collect';
-    case BranchToDoor = 'Send';
-    case DoorToBranch = 'D2B';
-    case BranchToBranch = 'B2B';
+    case DoorToDoor = 'Door2Door';
+    case BranchToDoor = 'Branch2Door';
+    case DoorToBranch = 'Door2Branch';
+    case BranchToBranch = 'Branch2Branch';
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::PickupOrCollect => 'Door to Door',
+            self::DoorToDoor => 'Door to Door',
             self::BranchToDoor => 'Branch to Door',
             self::DoorToBranch => 'Door to Branch',
             self::BranchToBranch => 'Branch to Branch',
@@ -24,10 +24,31 @@ enum DeliveryType: string
     public function getDescription(): string
     {
         return match ($this) {
-            self::PickupOrCollect => 'NCM pickup & delivery. Full base charge.',
+            self::DoorToDoor => 'NCM pickup & delivery. Full base charge.',
             self::BranchToDoor => 'Sender drops at branch, NCM delivers at door. Full base charge.',
             self::DoorToBranch => 'NCM pick, Customer collect at branch. Base charge - 50.',
             self::BranchToBranch => 'Sender Drop at branch & customer collect at branch. Base charge - 50.',
         };
+    }
+
+    /**
+     * Mapping for the /v1/shipping-rate endpoint
+     */
+    public function toShippingRateValue(): string
+    {
+        return match ($this) {
+            self::DoorToDoor => 'Pickup/Collect',
+            self::BranchToDoor => 'Send',
+            self::DoorToBranch => 'D2B',
+            self::BranchToBranch => 'B2B',
+        };
+    }
+
+    /**
+     * Mapping for the /v1/order/create endpoint
+     */
+    public function toOrderCreateValue(): string
+    {
+        return $this->value;
     }
 }

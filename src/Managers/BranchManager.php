@@ -38,9 +38,9 @@ trait BranchManager
         $response = $this->client->get('/v1/shipping-rate', [
             'creation' => $source->name,
             'destination' => $destination->name,
-            'type' => $deliveryType->value,
+            'type' => $deliveryType->toShippingRateValue(),
         ]);
 
-        return $response['charge'];
+        return (float) $response['charge'];
     }
 }

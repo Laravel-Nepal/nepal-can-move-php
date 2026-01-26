@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AchyutN\NCM\Managers;
 
 use AchyutN\NCM\Data\Branch;
+use AchyutN\NCM\Enums\DeliveryType;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 
@@ -31,12 +32,13 @@ trait BranchManager
      *
      * @throws NCMException
      */
-    public function getDeliveryCharge(Branch $source, Branch $destination): float
+    public function getDeliveryCharge(Branch $source, Branch $destination, DeliveryType $deliveryType): float
     {
         /** @var array{'charge': float} $response */
         $response = $this->client->get('/v1/shipping-rate', [
             'creation' => $source->name,
             'destination' => $destination->name,
+            'type' => $deliveryType->value,
         ]);
 
         return $response['charge'];

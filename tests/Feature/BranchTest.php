@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use AchyutN\NCM\Data\Branch;
+use AchyutN\NCM\Enums\DeliveryType;
 use Illuminate\Support\Collection;
 
 it('fetches all branches successfully', function () {
@@ -29,7 +30,7 @@ it('fetches the delivery charge between branches', function () {
     expect($source)->toBeInstanceOf(Branch::class)
         ->and($destination)->toBeInstanceOf(Branch::class);
 
-    $charge = $ncm->getDeliveryCharge($source, $destination);
+    $charge = $ncm->getDeliveryCharge($source, $destination, DeliveryType::PickupOrCollect);
 
     expect($charge)->toBeGreaterThanOrEqual(0);
 });

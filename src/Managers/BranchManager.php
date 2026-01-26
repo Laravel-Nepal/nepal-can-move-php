@@ -25,4 +25,20 @@ trait BranchManager
 
         return collect($response)->map(fn (array $branch): Branch => new Branch($branch, $this));
     }
+
+    /**
+     * Get the delivery charge between branches.
+     *
+     * @throws NCMException
+     */
+    public function getDeliveryCharge(Branch $source, Branch $destination): float
+    {
+        /** @var array{'charge': float} $response */
+        $response = $this->client->get('/v1/shipping-rate', [
+            'creation' => $source->name,
+            'destination' => $destination->name,
+        ]);
+
+        return $response['charge'];
+    }
 }

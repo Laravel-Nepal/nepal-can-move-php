@@ -24,7 +24,7 @@ final class NCMClient
 
         $this->client = $client ?? new Client([
             'base_uri' => $baseUri,
-            'http_errors' => true,
+            'http_errors' => false,
             'headers' => [
                 'Authorization' => 'Token '.$apiKey,
                 'Accept' => 'application/json',
@@ -64,7 +64,6 @@ final class NCMClient
 
             $responseBody = (string) $response->getBody();
         } catch (Throwable $throwable) {
-            dd($throwable);
             throw new NCMException($throwable->getMessage(), $throwable->getCode(), $throwable);
         }
 

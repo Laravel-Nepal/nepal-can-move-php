@@ -87,8 +87,8 @@ $request = new CreateOrderRequest(
     phone: '9800000000',
     codCharge: '1500',
     address: 'Lakeside, Pokhara',
-    fbranch: 'KATHMANDU',
-    branch: 'POKHARA',
+    sourceBranch: 'KATHMANDU',
+    destinationBranch: 'POKHARA',
     package: 'Books',
     deliveryType: DeliveryType::DoorToDoor
 );

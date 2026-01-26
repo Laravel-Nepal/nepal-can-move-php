@@ -24,7 +24,7 @@ final class NCMClient
 
         $this->client = $client ?? new Client([
             'base_uri' => $baseUri,
-            'http_errors' => false,
+            'http_errors' => true,
             'headers' => [
                 'Authorization' => 'Token '.$apiKey,
                 'Accept' => 'application/json',
@@ -83,11 +83,11 @@ final class NCMClient
 
         $bodyArray = (array) $body;
 
-        if (! is_null($bodyArray['Error'] ?? null)) {
-            throw new NCMException($this->formatError($bodyArray['Error']), $response->getStatusCode());
+        foreach (['Error', 'message', 'detail'] as $key) {
+            if (! is_null($bodyArray[$key] ?? null)) {
+                throw new NCMException($this->formatError($bodyArray[$key]), $response->getStatusCode());
+            }
         }
-
-        throw new NCMException($this->formatError($bodyArray['detail'] ?? null), $response->getStatusCode());
     }
 
     private function formatError(mixed $error): string

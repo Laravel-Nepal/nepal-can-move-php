@@ -82,6 +82,16 @@ final class Order extends BaseData
     }
 
     /**
+     * Mark the order for return.
+     *
+     * @param  string|null  $reason  The reason for return (optional).
+     */
+    public function return(?string $reason = null): bool
+    {
+        return $this->ncm->returnOrder($this->orderid);
+    }
+
+    /**
      * Add a comment to the order.
      */
     public function addComment(string $comment): bool

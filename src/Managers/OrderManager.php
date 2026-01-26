@@ -141,4 +141,24 @@ trait OrderManager
             ->values()
             ->map(fn (array $comment): Comment => new Comment($comment, $this));
     }
+
+    /**
+     * Mark an order for return process.
+     *
+     * @param  string|null  $reason  Reason for returning the order
+     */
+    public function returnOrder(int $id, ?string $reason = null): bool
+    {
+        try {
+            $this->client->post('/v2/vendor/order/return', [
+                'pk' => $id,
+                'comment' => $reason,
+            ]);
+
+        } catch (NCMException) {
+            return false;
+        }
+
+        return true;
+    }
 }

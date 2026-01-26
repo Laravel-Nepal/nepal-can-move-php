@@ -51,4 +51,18 @@ enum DeliveryType: string
     {
         return $this->value;
     }
+
+    /**
+     * Map the order creation response to DeliveryType enum
+     */
+    public static function fromOrderCreateValue(string $value): ?self
+    {
+        return match ($value) {
+            'Pickup/Collect' => self::DoorToDoor,
+            'Send' => self::BranchToDoor,
+            'D2B' => self::DoorToBranch,
+            'B2B' => self::BranchToBranch,
+            default => null,
+        };
+    }
 }

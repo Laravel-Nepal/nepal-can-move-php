@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AchyutN\NCM\Data;
 
+use AchyutN\NCM\Enums\DeliveryType;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -41,7 +42,7 @@ final class Order extends BaseData
     /**
      * The delivery type of the order.
      */
-    public ?string $deliveryType = null;
+    public ?DeliveryType $deliveryType = null;
 
     /**
      * The cash on delivery charge for the order.
@@ -124,7 +125,11 @@ final class Order extends BaseData
     {
         $this->orderid = $response['orderid'];
         $this->deliveryCharge = (float) ($response['delivery_charge'] ?? 0);
-        $this->deliveryType = $response['delivery_type'] ?? null;
+
+        if (isset($response['delivery_type'])) {
+            $deliveryType = $response['delivery_type'];
+            $this->deliveryType = DeliveryType::fromOrderCreateValue($deliveryType);
+        }
 
         if (isset($response['weight'])) {
             $weight = $response['weight'];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use AchyutN\NCM\Data\Comment;
 use AchyutN\NCM\Data\CreateOrderRequest;
 use AchyutN\NCM\Data\OrderStatus;
+use AchyutN\NCM\Enums\DeliveryType;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 
@@ -41,9 +42,9 @@ describe('order', function () {
         fbranch: 'POKHARA',
         branch: 'TINKUNE',
         package: 'Books',
-        vrefId: 'VREF12345',
+        vrefId: 'SDK-Order-'.time(),
         instruction: 'Handle with care',
-        deliveryType: 'Door2Door',
+        deliveryType: DeliveryType::BranchToBranch,
         weight: '1',
     );
 

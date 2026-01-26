@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AchyutN\NCM\Data;
 
+use AchyutN\NCM\Enums\DeliveryType;
+
 final class CreateOrderRequest
 {
     public function __construct(
@@ -17,7 +19,7 @@ final class CreateOrderRequest
         public ?string $package = '',
         public ?string $vrefId = '',
         public ?string $instruction = '',
-        public string $deliveryType = 'Door2Door',
+        public DeliveryType $deliveryType = DeliveryType::DoorToDoor,
         public string $weight = '1'
     ) {}
 
@@ -37,7 +39,7 @@ final class CreateOrderRequest
             'package' => $this->package,
             'vref_id' => $this->vrefId,
             'instruction' => $this->instruction,
-            'delivery_type' => $this->deliveryType,
+            'delivery_type' => $this->deliveryType->toOrderCreateValue(),
             'weight' => $this->weight,
         ];
     }

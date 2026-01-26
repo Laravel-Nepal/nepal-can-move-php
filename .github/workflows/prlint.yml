@@ -61,4 +61,4 @@ jobs:
 
             -   name: "Run Tests"
                 run: |
-                    ./vendor/bin/pest --colors=always --stop-on-failure --coverage --ci
+                    NCM_TOKEN="${{ secrets.NCM_TOKEN }}" ./vendor/bin/pest --colors=always --stop-on-failure --coverage --ci

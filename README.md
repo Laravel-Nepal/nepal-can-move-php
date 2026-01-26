@@ -1,5 +1,7 @@
 # Nepal Can Move SDK
 
+[![Lint & Test PR](https://github.com/achyutkneupane/nepal-can-move-php/actions/workflows/prlint.yml/badge.svg)](https://github.com/achyutkneupane/nepal-can-move-php/actions/workflows/prlint.yml)
+
 ## Contributing
 
 Contributions are welcome! Please create a pull request or open an issue if you find any bugs or have feature requests.

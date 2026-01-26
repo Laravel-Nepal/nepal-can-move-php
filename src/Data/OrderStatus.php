@@ -18,7 +18,7 @@ use Illuminate\Support\Carbon;
  */
 final class OrderStatus extends BaseData
 {
-    public int $orderid;
+    public int $orderId;
 
     public string $status;
 
@@ -28,7 +28,7 @@ final class OrderStatus extends BaseData
 
     protected function fromResponse(array $response): void
     {
-        $this->orderid = $response['orderid'];
+        $this->orderId = $response['orderid'];
         $this->status = $response['status'];
         $this->addedTime = isset($response['added_time']) ? Carbon::parse($response['added_time']) : null;
 

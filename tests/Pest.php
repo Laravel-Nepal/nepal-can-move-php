@@ -23,6 +23,6 @@ function ncm(): NCM
 
 expect()->extend('toBeValidOrder', function () {
     return $this->toBeInstanceOf(Order::class)
-        ->toHaveKey('orderid')
-        ->orderid->toBeInt()->toBeGreaterThan(0);
+        ->toHaveKey('id')
+        ->id->toBeInt()->toBeGreaterThan(0);
 });

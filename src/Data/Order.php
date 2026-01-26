@@ -27,7 +27,7 @@ final class Order extends BaseData
     /**
      * The unique ID of the order.
      */
-    public int $orderid;
+    public int $id;
 
     /**
      * The weight of the order.
@@ -66,7 +66,7 @@ final class Order extends BaseData
      */
     public function status(): Collection
     {
-        return $this->ncm->getOrderStatus($this->orderid);
+        return $this->ncm->getOrderStatus($this->id);
     }
 
     /**
@@ -78,7 +78,7 @@ final class Order extends BaseData
      */
     public function comments(): Collection
     {
-        return $this->ncm->getOrderComments($this->orderid);
+        return $this->ncm->getOrderComments($this->id);
     }
 
     /**
@@ -86,7 +86,7 @@ final class Order extends BaseData
      */
     public function addComment(string $comment): bool
     {
-        return $this->ncm->addOrderComment($this->orderid, $comment);
+        return $this->ncm->addOrderComment($this->id, $comment);
     }
 
     /**
@@ -98,7 +98,7 @@ final class Order extends BaseData
      */
     public function return(?string $reason = null): bool
     {
-        return $this->ncm->returnOrder($this->orderid, $reason);
+        return $this->ncm->returnOrder($this->id, $reason);
     }
 
     /**
@@ -108,7 +108,7 @@ final class Order extends BaseData
      */
     public function exchange(): true
     {
-        return $this->ncm->exchangeOrder($this->orderid);
+        return $this->ncm->exchangeOrder($this->id);
     }
 
     /**
@@ -123,7 +123,7 @@ final class Order extends BaseData
 
     protected function fromResponse(array $response): void
     {
-        $this->orderid = $response['orderid'];
+        $this->id = $response['orderid'];
         $this->deliveryCharge = (float) ($response['delivery_charge'] ?? 0);
 
         if (isset($response['delivery_type'])) {

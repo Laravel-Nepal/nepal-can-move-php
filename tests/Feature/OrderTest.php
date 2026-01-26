@@ -55,10 +55,10 @@ describe('order', function () {
     });
 
     it('can fetch an order by ID', function () use ($ncm, $order) {
-        $fetchedOrder = $ncm->getOrder($order->orderid);
+        $fetchedOrder = $ncm->getOrder($order->id);
 
         expect($fetchedOrder)->toBeValidOrder()
-            ->and($fetchedOrder->orderid)->toBe($order->orderid);
+            ->and($fetchedOrder->id)->toBe($order->id);
     });
 
     it('returns collection of status', function () use ($order) {
@@ -70,7 +70,7 @@ describe('order', function () {
     });
 
     it('can fetch statuses for multiple orders', function () use ($ncm, $order) {
-        $statuses = $ncm->getOrdersStatuses([$order->orderid]);
+        $statuses = $ncm->getOrdersStatuses([$order->id]);
 
         expect($statuses)
             ->toBeInstanceOf(Collection::class)

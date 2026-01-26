@@ -54,10 +54,9 @@ describe('COD transfer ticket', function () {
 
         expect($newTicketId)->toBeInt()->toBeGreaterThan(0)
             ->and($newTicketId)->not->toBe($ticketId);
-    });
 
-    it('clears ticket after tests', function () use ($ncm, $ticketId) {
-        $response = $ncm->closeTicket($ticketId);
+        // clears ticket after tests
+        $response = $ncm->closeTicket($newTicketId);
 
         expect($response)->toBeTrue();
     });

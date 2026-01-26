@@ -30,7 +30,7 @@ it('fetches the delivery charge between branches', function () {
     expect($source)->toBeInstanceOf(Branch::class)
         ->and($destination)->toBeInstanceOf(Branch::class);
 
-    $charge = $ncm->getDeliveryCharge($source, $destination, DeliveryType::PickupOrCollect);
+    $charge = $ncm->getDeliveryCharge($source, $destination, DeliveryType::DoorToDoor);
 
     expect($charge)->toBeGreaterThanOrEqual(0);
 });

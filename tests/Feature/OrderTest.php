@@ -42,7 +42,7 @@ describe('order', function () {
         fbranch: 'POKHARA',
         branch: 'TINKUNE',
         package: 'Books',
-        vrefId: 'SDK-Order-'.time(),
+        vrefId: 'SDK'.time(),
         instruction: 'Handle with care',
         deliveryType: DeliveryType::BranchToBranch,
         weight: '1',

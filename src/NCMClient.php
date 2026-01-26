@@ -64,6 +64,7 @@ final class NCMClient
 
             $responseBody = (string) $response->getBody();
         } catch (Throwable $throwable) {
+            dd($throwable);
             throw new NCMException($throwable->getMessage(), $throwable->getCode(), $throwable);
         }
 

@@ -161,4 +161,20 @@ trait OrderManager
 
         return true;
     }
+
+    /**
+     * Mark an order for exchange process.
+     */
+    public function exchangeOrder(int $id): bool
+    {
+        try {
+            $this->client->post('/v2/vendor/order/exchange-create', [
+                'pk' => $id,
+            ]);
+        } catch (NCMException) {
+            return false;
+        }
+
+        return true;
+    }
 }

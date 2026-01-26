@@ -92,6 +92,14 @@ final class Order extends BaseData
     }
 
     /**
+     * Mark the order for exchange.
+     */
+    public function exchange(): bool
+    {
+        return $this->ncm->exchangeOrder($this->orderid);
+    }
+
+    /**
      * Add a comment to the order.
      */
     public function addComment(string $comment): bool

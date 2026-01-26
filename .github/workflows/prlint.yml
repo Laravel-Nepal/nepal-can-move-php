@@ -60,5 +60,8 @@ jobs:
                     ./vendor/bin/phpstan analyse --error-format=github
 
             -   name: "Run Tests"
+                if: matrix.php == '8.4' && matrix.laravel == '12.*'
+                env:
+                    NCM_TOKEN: ${{ secrets.NCM_TOKEN }}
                 run: |
-                    NCM_TOKEN="${{ secrets.NCM_TOKEN }}" ./vendor/bin/pest --colors=always --stop-on-failure --coverage --ci
+                    ./vendor/bin/pest --colors=always --stop-on-failure --coverage --ci

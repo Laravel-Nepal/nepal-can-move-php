@@ -39,7 +39,7 @@ NCM_SANDBOX_MODE=true
 ## Usage
 
 > [!WARNING]  
-> API Limits
+> ### API Limits
 >
 > Please be mindful of the NCM API limits to avoid IP throttling:
 >
@@ -98,7 +98,8 @@ $order = NCM::createOrder($request);
 echo $order->id;
 ```
 
-> Note: The NCM API uses different naming conventions across its endpoints (e.g., Pickup/Collect vs Door2Door).
+> [!IMPORTANT]  
+> The NCM API uses different naming conventions across its endpoints (e.g., Pickup/Collect vs Door2Door).  
 > This SDK normalizes these into the DeliveryType enum. You should always use the Enum cases; the SDK handles the underlying API string transformations automatically.
 
 ### Order Management

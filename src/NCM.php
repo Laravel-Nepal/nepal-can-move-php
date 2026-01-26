@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace AchyutN\NCM;
 
 use AchyutN\NCM\Exceptions\NCMException;
+use AchyutN\NCM\Managers\HasManagers;
 use GuzzleHttp\Client;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 final class NCM
 {
     use ForwardsCalls;
+    use HasManagers;
 
     /**
      * The NepalCanMove client instance.

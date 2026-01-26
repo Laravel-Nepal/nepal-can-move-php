@@ -83,11 +83,11 @@ final class NCMClient
 
         $bodyArray = (array) $body;
 
-        if (! is_null($bodyArray['Error'])) {
-            throw new NCMException($this->formatError($bodyArray['Error']), $response->getStatusCode());
+        foreach (['Error', 'message', 'detail'] as $key) {
+            if (! is_null($bodyArray[$key] ?? null)) {
+                throw new NCMException($this->formatError($bodyArray[$key]), $response->getStatusCode());
+            }
         }
-
-        throw new NCMException($this->formatError($bodyArray['detail'] ?? null), $response->getStatusCode());
     }
 
     private function formatError(mixed $error): string
@@ -97,9 +97,15 @@ final class NCMClient
         }
 
         if (is_array($error)) {
-            /** @var array<string, string> $error */
+            /** @var array<string, mixed> $error */
             return implode(', ', array_map(
-                fn ($key, string $val): string => is_numeric($key) ? $val : "{$key}: {$val}",
+                fn ($key, mixed $val): string => (string) match (true) {
+                    is_array($val) => $key.': '.implode(', ', $val),
+                    is_object($val) => json_encode($val),
+                    is_string($val), is_numeric($val) => "{$key}: {$val}",
+                    default => 'Unexpected error format',
+                },
+
                 array_keys($error),
                 $error
             ));

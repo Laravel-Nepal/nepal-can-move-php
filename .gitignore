@@ -4,6 +4,4 @@ vendor
 /.idea
 /.vscode
 Thumbs.db
-
-src/Data
-src/Managers
+.env

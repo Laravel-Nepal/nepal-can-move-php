@@ -22,4 +22,26 @@ trait TicketManager
 
         return true;
     }
+
+    /**
+     * Create a Cash on Delivery (COD) transfer request ticket.
+     *
+     * @return int The ticket ID created for the COD transfer request.
+     *
+     * @throws NCMException
+     */
+    public function createCODTransferTicket(
+        string $bankName,
+        string $accountHolderName,
+        string $accountNumber,
+    ): int {
+        /** @var array{'message': string, 'ticket': int} $response */
+        $response = $this->client->post('/v2/vendor/ticket/cod/create', [
+            'bankName' => $bankName,
+            'bankAccountName' => $accountHolderName,
+            'bankAccountNumber' => $accountNumber,
+        ]);
+
+        return $response['ticket'];
+    }
 }

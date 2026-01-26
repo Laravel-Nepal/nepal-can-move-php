@@ -98,7 +98,7 @@ final class Order extends BaseData
      */
     public function return(?string $reason = null): bool
     {
-        return $this->ncm->returnOrder($this->orderid);
+        return $this->ncm->returnOrder($this->orderid, $reason);
     }
 
     /**
@@ -106,7 +106,7 @@ final class Order extends BaseData
      *
      * @throws NCMException
      */
-    public function exchange(): bool
+    public function exchange(): true
     {
         return $this->ncm->exchangeOrder($this->orderid);
     }

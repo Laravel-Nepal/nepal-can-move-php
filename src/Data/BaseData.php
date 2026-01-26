@@ -17,9 +17,4 @@ abstract class BaseData
 
     /** @param T $response */
     abstract protected function fromResponse(array $response): void;
-
-    protected function camelCase(string $key): string
-    {
-        return lcfirst(str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $key))));
-    }
 }

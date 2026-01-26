@@ -23,7 +23,7 @@ final class NCMServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../config/config/nepal-can-move.php' => $this->app->configPath('nepal-can-move.php'),
+                __DIR__.'/../../config/nepal-can-move.php' => $this->app->configPath('nepal-can-move.php'),
             ], 'nepal-can-move');
         }
     }

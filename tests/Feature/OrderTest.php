@@ -25,8 +25,8 @@ it('fails to create an order with invalid branch', function () {
         phone: 'INVALID_NUMBER',
         codCharge: 'INVALID_CHARGE',
         address: 'INVALID_ADDRESS',
-        fbranch: 'INVALID_BRANCH',
-        branch: 'INVALID_BRANCH',
+        sourceBranch: 'INVALID_BRANCH',
+        destinationBranch: 'INVALID_BRANCH',
     ));
 });
 
@@ -39,10 +39,10 @@ describe('order', function () {
         phone: '9860323771',
         codCharge: '150',
         address: 'Lakeside',
-        fbranch: 'POKHARA',
-        branch: 'TINKUNE',
+        sourceBranch: 'POKHARA',
+        destinationBranch: 'TINKUNE',
         package: 'Books',
-        vrefId: 'SDK'.time(),
+        orderIdentifier: 'SDK'.time(),
         instruction: 'Handle with care',
         deliveryType: DeliveryType::BranchToBranch,
         weight: '1',

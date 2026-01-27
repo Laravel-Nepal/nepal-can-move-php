@@ -66,7 +66,7 @@ final class Order extends BaseData
      */
     public function statusHistory(): Collection
     {
-        return $this->ncm->getOrderStatus($this->id);
+        return $this->ncm->getOrderStatusHistory($this->id);
     }
 
     /**
@@ -76,13 +76,7 @@ final class Order extends BaseData
      */
     public function status(): ?OrderStatus
     {
-        $history = $this->statusHistory();
-
-        if ($history->isEmpty()) {
-            return null;
-        }
-
-        return $history->sortByDesc(fn (OrderStatus $status) => $status->addedTime)->first();
+        return $this->ncm->getOrderStatus($this->id);
     }
 
     /**

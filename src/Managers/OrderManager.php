@@ -55,7 +55,7 @@ trait OrderManager
      *
      * @throws NCMException
      */
-    public function getOrderStatus(int $id): Collection
+    public function getOrderStatusHistory(int $id): Collection
     {
         /** @var array<OrderStatusData> $response */
         $response = $this->client->get('/v1/order/status', [
@@ -67,6 +67,22 @@ trait OrderManager
         }
 
         return collect($response)->map(fn ($status): OrderStatus => new OrderStatus($status, $this));
+    }
+
+    /**
+     * Get latest order status by order ID.
+     *
+     * @throws NCMException
+     */
+    public function getOrderStatus(int $id): ?OrderStatus
+    {
+        $history = $this->getOrderStatusHistory($id);
+
+        if ($history->isEmpty()) {
+            return null;
+        }
+
+        return $history->sortByDesc(fn (OrderStatus $status) => $status->addedTime)->first();
     }
 
     /**

@@ -108,7 +108,7 @@ describe('order', function () {
         }
     });
 
-    it('can mark order for return process', function () use ($ncm, $order) {
+    it('can mark order for return process', function () use ($order) {
         $status = $order->status()->status;
 
         if (! in_array($status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
@@ -120,7 +120,7 @@ describe('order', function () {
         expect($response)->toBeTrue();
     });
 
-    it('can mark order for exchange process', function () use ($ncm, $order) {
+    it('can mark order for exchange process', function () use ($order) {
         $status = $order->status()->status;
 
         if ($status !== OrderStatusEnum::Delivered) {
@@ -132,7 +132,7 @@ describe('order', function () {
         expect($response)->toBeTrue();
     });
 
-    it('can mark order for redirect process', function () use ($ncm, $order) {
+    it('can mark order for redirect process', function () use ($order) {
         $redirectOrderRequest = new RedirectOrderRequest(
             orderId: $order->id,
             name: 'Achyut Neupane (Updated)',

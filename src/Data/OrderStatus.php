@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AchyutN\NCM\Data;
 
-use Illuminate\Support\Carbon;
 use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
+use Illuminate\Support\Carbon;
 
 /**
  * @phpstan-type OrderStatusData array{

@@ -115,12 +115,18 @@ $order = NCM::getOrder(12345);
 #### Status History
 
 ```php
-$history = $order->status();
+$history = $order->statusHistory();
 
 foreach ($history as $status) {
     echo $status->status . ' - ' . $status->addedTime->diffForHumans();
 }
 ```
+
+##### Latest Order Status
+
+```php
+echo $order->status();
+````
 
 #### Comments
 
@@ -144,7 +150,7 @@ $order->exchange();
 use AchyutN\NCM\Data\RedirectOrderRequest;
 
 $redirect = new RedirectOrderRequest(
-    orderid: $order->id,
+    orderId: $order->id,
     name: 'Not Achyut Neupane',
     phone: '9811111111',
     address: 'New Address, Kathmandu',

@@ -9,6 +9,7 @@ use AchyutN\NCM\Data\CreateOrderRequest;
 use AchyutN\NCM\Data\Order;
 use AchyutN\NCM\Data\OrderStatus;
 use AchyutN\NCM\Data\RedirectOrderRequest;
+use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 
@@ -48,20 +49,40 @@ trait OrderManager
     }
 
     /**
-     * Get order details by order ID.
+     * Get order status history by order ID.
      *
      * @return Collection<int, OrderStatus>
      *
      * @throws NCMException
      */
-    public function getOrderStatus(int $id): Collection
+    public function getOrderStatusHistory(int $id): Collection
     {
         /** @var array<OrderStatusData> $response */
         $response = $this->client->get('/v1/order/status', [
             'id' => $id,
         ]);
 
+        if (empty($response)) {
+            throw new NCMException("Order status not found for order ID: {$id}");
+        }
+
         return collect($response)->map(fn ($status): OrderStatus => new OrderStatus($status, $this));
+    }
+
+    /**
+     * Get latest order status by order ID.
+     *
+     * @throws NCMException
+     */
+    public function getOrderStatus(int $id): ?OrderStatus
+    {
+        $history = $this->getOrderStatusHistory($id);
+
+        if ($history->isEmpty()) {
+            return null;
+        }
+
+        return $history->sortByDesc(fn (OrderStatus $status): ?\Illuminate\Support\Carbon => $status->addedTime)->first();
     }
 
     /**
@@ -152,6 +173,16 @@ trait OrderManager
      */
     public function returnOrder(int $id, ?string $reason = null): bool
     {
+        $order = $this->getOrderStatus($id);
+
+        if ($order === null) {
+            throw new NCMException("Order with ID {$id} not found.");
+        }
+
+        if (! in_array($order->status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
+            throw new NCMException("Order with ID {$id} of status {$order->status->getLabel()} cannot be marked for return.");
+        }
+
         $this->client->post('/v2/vendor/order/return', [
             'pk' => $id,
             'comment' => $reason,
@@ -167,6 +198,16 @@ trait OrderManager
      */
     public function exchangeOrder(int $id): true
     {
+        $order = $this->getOrderStatus($id);
+
+        if ($order === null) {
+            throw new NCMException("Order with ID {$id} not found.");
+        }
+
+        if ($order->status !== OrderStatusEnum::Delivered) {
+            throw new NCMException("Order with ID {$id} of status {$order->status->getLabel()} cannot be marked for exchange.");
+        }
+
         $this->client->post('/v2/vendor/order/exchange-create', [
             'pk' => $id,
         ]);
@@ -181,6 +222,18 @@ trait OrderManager
      */
     public function redirectOrder(RedirectOrderRequest $redirectOrderRequest): bool
     {
+        $orderId = $redirectOrderRequest->orderId;
+
+        $order = $this->getOrderStatus($orderId);
+
+        if ($order === null) {
+            throw new NCMException("Order with ID {$orderId} not found.");
+        }
+
+        if (! in_array($order->status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
+            throw new NCMException("Order with ID {$orderId} of status {$order->status->getLabel()} cannot be marked for return.");
+        }
+
         $this->client->post('/v2/vendor/order/redirect', $redirectOrderRequest->toArray());
 
         return true;

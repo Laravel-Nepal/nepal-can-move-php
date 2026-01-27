@@ -64,7 +64,15 @@ final class Order extends BaseData
      *
      * @throws NCMException
      */
-    public function status(): Collection
+    public function statusHistory(): Collection
+    {
+        return $this->ncm->getOrderStatusHistory($this->id);
+    }
+
+    /**
+     * @throws NCMException
+     */
+    public function status(): ?OrderStatus
     {
         return $this->ncm->getOrderStatus($this->id);
     }

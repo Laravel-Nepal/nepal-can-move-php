@@ -5,7 +5,9 @@ declare(strict_types=1);
 use AchyutN\NCM\Data\Comment;
 use AchyutN\NCM\Data\CreateOrderRequest;
 use AchyutN\NCM\Data\OrderStatus;
+use AchyutN\NCM\Data\RedirectOrderRequest;
 use AchyutN\NCM\Enums\DeliveryType;
+use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 
@@ -15,7 +17,7 @@ beforeEach(function () {
     }
 });
 
-it('fails to create an order with invalid branch', function () {
+it('fails to create an order with invalid values', function () {
     $ncm = ncm();
 
     $this->expectException(NCMException::class);
@@ -61,12 +63,18 @@ describe('order', function () {
             ->and($fetchedOrder->id)->toBe($order->id);
     });
 
-    it('returns collection of status', function () use ($order) {
-        $statusCollection = $order->status();
+    it('returns order status history', function () use ($order) {
+        $status = $order->statusHistory();
 
-        expect($statusCollection)
-            ->toBeInstanceOf(Collection::class)
-            ->and($statusCollection->first())->toBeInstanceOf(OrderStatus::class);
+        expect($status)->toBeInstanceOf(Collection::class)
+            ->and($status->first())->toBeInstanceOf(OrderStatus::class);
+    });
+
+    it('returns order status', function () use ($order) {
+        $status = $order->status();
+
+        expect($status)
+            ->toBeInstanceOf(OrderStatus::class);
     });
 
     it('can fetch statuses for multiple orders', function () use ($ncm, $order) {
@@ -105,5 +113,51 @@ describe('order', function () {
                 ->and($comments->first())
                 ->toBeInstanceOf(Comment::class);
         }
+    });
+
+    it('can mark order for return process', function () use ($order) {
+        $status = $order->status()->status;
+
+        if (! in_array($status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
+            $this->expectException(NCMException::class);
+        }
+
+        $response = $order->return('Customer not available');
+
+        expect($response)->toBeTrue();
+    });
+
+    it('can mark order for exchange process', function () use ($order) {
+        $status = $order->status()->status;
+
+        if ($status !== OrderStatusEnum::Delivered) {
+            $this->expectException(NCMException::class);
+        }
+
+        $response = $order->exchange();
+
+        expect($response)->toBeTrue();
+    });
+
+    it('can mark order for redirect process', function () use ($order) {
+        $redirectOrderRequest = new RedirectOrderRequest(
+            orderId: $order->id,
+            name: 'Achyut Neupane (Updated)',
+            phone: '9804087870',
+            address: 'New Address, Pokhara',
+            orderIdentifier: 'NEW'.time(),
+            destinationBranchId: 1,
+            codCharge: 200.0,
+        );
+
+        $status = $order->status()->status;
+
+        if (! in_array($status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
+            $this->expectException(NCMException::class);
+        }
+
+        $response = $order->redirect($redirectOrderRequest);
+
+        expect($response)->toBeTrue();
     });
 });

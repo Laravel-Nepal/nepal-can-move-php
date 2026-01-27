@@ -82,7 +82,7 @@ trait OrderManager
             return null;
         }
 
-        return $history->sortByDesc(fn (OrderStatus $status) => $status->addedTime)->first();
+        return $history->sortByDesc(fn (OrderStatus $status): ?\Illuminate\Support\Carbon => $status->addedTime)->first();
     }
 
     /**
@@ -175,6 +175,10 @@ trait OrderManager
     {
         $order = $this->getOrderStatus($id);
 
+        if ($order === null) {
+            throw new NCMException("Order with ID {$id} not found.");
+        }
+
         if (! in_array($order->status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
             throw new NCMException("Order with ID {$id} of status {$order->status->getLabel()} cannot be marked for return.");
         }
@@ -195,6 +199,10 @@ trait OrderManager
     public function exchangeOrder(int $id): true
     {
         $order = $this->getOrderStatus($id);
+
+        if ($order === null) {
+            throw new NCMException("Order with ID {$id} not found.");
+        }
 
         if ($order->status !== OrderStatusEnum::Delivered) {
             throw new NCMException("Order with ID {$id} of status {$order->status->getLabel()} cannot be marked for exchange.");
@@ -217,6 +225,10 @@ trait OrderManager
         $orderId = $redirectOrderRequest->orderId;
 
         $order = $this->getOrderStatus($orderId);
+
+        if ($order === null) {
+            throw new NCMException("Order with ID {$orderId} not found.");
+        }
 
         if (! in_array($order->status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
             throw new NCMException("Order with ID {$orderId} of status {$order->status->getLabel()} cannot be marked for return.");

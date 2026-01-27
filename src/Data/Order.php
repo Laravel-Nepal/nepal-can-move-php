@@ -70,8 +70,6 @@ final class Order extends BaseData
     }
 
     /**
-     * @return OrderStatus|null
-     *
      * @throws NCMException
      */
     public function status(): ?OrderStatus

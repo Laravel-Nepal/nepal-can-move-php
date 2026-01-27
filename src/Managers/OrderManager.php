@@ -49,11 +49,13 @@ trait OrderManager
     }
 
     /**
-     * Get order details by order ID.
+     * Get order status history by order ID.
+     *
+     * @return Collection<int, OrderStatus>
      *
      * @throws NCMException
      */
-    public function getOrderStatus(int $id): OrderStatus
+    public function getOrderStatus(int $id): Collection
     {
         /** @var array<OrderStatusData> $response */
         $response = $this->client->get('/v1/order/status', [
@@ -64,7 +66,7 @@ trait OrderManager
             throw new NCMException("Order status not found for order ID: {$id}");
         }
 
-        return new OrderStatus($response[0], $this);
+        return collect($response)->map(fn ($status): OrderStatus => new OrderStatus($status, $this));
     }
 
     /**

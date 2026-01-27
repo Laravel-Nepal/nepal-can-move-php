@@ -115,7 +115,7 @@ $order = NCM::getOrder(12345);
 #### Status History
 
 ```php
-$history = $order->status();
+$history = $order->statusHistory();
 
 foreach ($history as $status) {
     echo $status->status . ' - ' . $status->addedTime->diffForHumans();

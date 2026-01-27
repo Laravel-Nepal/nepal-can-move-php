@@ -63,6 +63,13 @@ describe('order', function () {
             ->and($fetchedOrder->id)->toBe($order->id);
     });
 
+    it('returns order status history', function () use ($order) {
+        $status = $order->statusHistory();
+
+        expect($status)->toBeInstanceOf(Collection::class)
+            ->and($status->first())->toBeInstanceOf(OrderStatus::class);
+    });
+
     it('returns order status', function () use ($order) {
         $status = $order->status();
 

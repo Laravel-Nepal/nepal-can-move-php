@@ -60,11 +60,9 @@ final class Order extends BaseData
     public ?Carbon $deliveryDate = null;
 
     /**
-     * @return Collection<int, OrderStatus>
-     *
      * @throws NCMException
      */
-    public function status(): Collection
+    public function status(): OrderStatus
     {
         return $this->ncm->getOrderStatus($this->id);
     }

@@ -196,6 +196,14 @@ trait OrderManager
      */
     public function redirectOrder(RedirectOrderRequest $redirectOrderRequest): bool
     {
+        $orderId = $redirectOrderRequest->orderId;
+
+        $order = $this->getOrderStatus($orderId);
+
+        if (! in_array($order->status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
+            throw new NCMException("Order with ID {$orderId} of status {$order->status->getLabel()} cannot be marked for return.");
+        }
+
         $this->client->post('/v2/vendor/order/redirect', $redirectOrderRequest->toArray());
 
         return true;

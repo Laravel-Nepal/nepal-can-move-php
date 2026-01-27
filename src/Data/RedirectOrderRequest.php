@@ -7,7 +7,7 @@ namespace AchyutN\NCM\Data;
 final class RedirectOrderRequest
 {
     public function __construct(
-        public int $orderid,
+        public int $orderId,
         public string $name,
         public string $phone,
         public string $address,
@@ -22,7 +22,7 @@ final class RedirectOrderRequest
     public function toArray(): array // @phpstan-ignore-line
     {
         return [
-            'pk' => $this->orderid,
+            'pk' => $this->orderId,
             'name' => $this->name,
             'phone' => $this->phone,
             'address' => $this->address,

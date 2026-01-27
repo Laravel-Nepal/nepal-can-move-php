@@ -118,4 +118,16 @@ describe('order', function () {
 
         expect($response)->toBeTrue();
     });
+
+    it('can mark order for exchange process', function () use ($ncm, $order) {
+        $status = $order->status()->status;
+
+        if ($status !== OrderStatusEnum::Delivered) {
+            $this->expectException(NCMException::class);
+        }
+
+        $response = $order->exchange();
+
+        expect($response)->toBeTrue();
+    });
 });

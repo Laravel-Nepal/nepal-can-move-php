@@ -9,9 +9,9 @@ use AchyutN\NCM\Data\CreateOrderRequest;
 use AchyutN\NCM\Data\Order;
 use AchyutN\NCM\Data\OrderStatus;
 use AchyutN\NCM\Data\RedirectOrderRequest;
+use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
 use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
-use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
 
 /**
  * @phpstan-import-type OrderData from Order
@@ -158,7 +158,7 @@ trait OrderManager
         $order = $this->getOrderStatus($id);
 
         if (! in_array($order->status, [OrderStatusEnum::Arrived, OrderStatusEnum::PickupComplete, OrderStatusEnum::ReturnedToWarehouse])) {
-            throw new NCMException("Order with ID {$id} of status {$order->status->getLabel()} cannot be marked as returned.");
+            throw new NCMException("Order with ID {$id} of status {$order->status->getLabel()} cannot be marked for return.");
         }
 
         $this->client->post('/v2/vendor/order/return', [
@@ -176,6 +176,12 @@ trait OrderManager
      */
     public function exchangeOrder(int $id): true
     {
+        $order = $this->getOrderStatus($id);
+
+        if ($order->status !== OrderStatusEnum::Delivered) {
+            throw new NCMException("Order with ID {$id} of status {$order->status->getLabel()} cannot be marked for exchange.");
+        }
+
         $this->client->post('/v2/vendor/order/exchange-create', [
             'pk' => $id,
         ]);

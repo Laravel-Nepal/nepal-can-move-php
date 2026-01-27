@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AchyutN\NCM\Data;
 
 use Illuminate\Support\Carbon;
+use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
 
 /**
  * @phpstan-type OrderStatusData array{
@@ -20,7 +21,7 @@ final class OrderStatus extends BaseData
 {
     public int $orderId;
 
-    public string $status;
+    public OrderStatusEnum $status;
 
     public ?Carbon $addedTime = null;
 
@@ -29,7 +30,7 @@ final class OrderStatus extends BaseData
     protected function fromResponse(array $response): void
     {
         $this->orderId = $response['orderid'];
-        $this->status = $response['status'];
+        $this->status = OrderStatusEnum::from($response['status']);
         $this->addedTime = isset($response['added_time']) ? Carbon::parse($response['added_time']) : null;
 
         if (isset($response['vendor_return'])) {

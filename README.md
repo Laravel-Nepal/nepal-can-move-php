@@ -122,6 +122,12 @@ foreach ($history as $status) {
 }
 ```
 
+##### Latest Order Status
+
+```php
+echo $order->status();
+````
+
 #### Comments
 
 ```php
@@ -144,7 +150,7 @@ $order->exchange();
 use AchyutN\NCM\Data\RedirectOrderRequest;
 
 $redirect = new RedirectOrderRequest(
-    orderid: $order->id,
+    orderId: $order->id,
     name: 'Not Achyut Neupane',
     phone: '9811111111',
     address: 'New Address, Kathmandu',

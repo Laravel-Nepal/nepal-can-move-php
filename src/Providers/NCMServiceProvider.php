@@ -65,7 +65,7 @@ final class NCMServiceProvider extends ServiceProvider
     private function ensureTokenIsPresent(?string $token): void
     {
         if (trim((string) $token) === '') {
-            throw new NCMException('API token is required to communicate with Laravel News.');
+            throw new NCMException('API token is required to communicate with Nepal Can Move API.');
         }
     }
 }

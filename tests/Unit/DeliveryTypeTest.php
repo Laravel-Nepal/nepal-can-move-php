@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Enums\DeliveryType;
 
 it('has correct order create response value', function (string $input, DeliveryType $expected) {
     expect(DeliveryType::fromOrderCreateValue($input))->toBe($expected);

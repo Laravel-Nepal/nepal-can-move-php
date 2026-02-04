@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data;
+namespace LaravelNepal\NCM\Data;
 
 /**
  * @phpstan-type BranchData array{
@@ -49,7 +49,7 @@ final class Branch extends BaseData
     /**
      * The address of the branch.
      */
-    public ?string $address;
+    public ?string $address = null;
 
     /**
      * The surcharge of the branch.

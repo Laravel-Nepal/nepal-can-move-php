@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Data\Order;
-use AchyutN\NCM\Exceptions\NCMException;
-use AchyutN\NCM\NCM;
+use LaravelNepal\NCM\Data\Order;
+use LaravelNepal\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\NCM;
 
 uses()->in('Feature');
 

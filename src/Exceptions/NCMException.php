@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Exceptions;
+namespace LaravelNepal\NCM\Exceptions;
 
 use Exception;
 use Throwable;

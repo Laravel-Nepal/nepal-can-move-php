@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data;
+namespace LaravelNepal\NCM\Data;
 
-use AchyutN\NCM\NCM;
+use LaravelNepal\NCM\NCM;
 
 /** @template T of array */
 abstract class BaseData

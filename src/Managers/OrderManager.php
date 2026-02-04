@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Managers;
+namespace LaravelNepal\NCM\Managers;
 
-use AchyutN\NCM\Data\Comment;
-use AchyutN\NCM\Data\CreateOrderRequest;
-use AchyutN\NCM\Data\Order;
-use AchyutN\NCM\Data\OrderStatus;
-use AchyutN\NCM\Data\RedirectOrderRequest;
-use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
-use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
+use LaravelNepal\NCM\Data\Comment;
+use LaravelNepal\NCM\Data\CreateOrderRequest;
+use LaravelNepal\NCM\Data\Order;
+use LaravelNepal\NCM\Data\OrderStatus;
+use LaravelNepal\NCM\Data\RedirectOrderRequest;
+use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
+use LaravelNepal\NCM\Exceptions\NCMException;
 
 /**
  * @phpstan-import-type OrderData from Order

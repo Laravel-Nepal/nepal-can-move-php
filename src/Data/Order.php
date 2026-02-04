@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data;
+namespace LaravelNepal\NCM\Data;
 
-use AchyutN\NCM\Enums\DeliveryType;
-use AchyutN\NCM\Exceptions\NCMException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use LaravelNepal\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Exceptions\NCMException;
 
 /**
  * @phpstan-type OrderData array{

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Managers;
+namespace LaravelNepal\NCM\Managers;
 
 trait HasManagers
 {

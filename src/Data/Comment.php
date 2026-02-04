@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data;
+namespace LaravelNepal\NCM\Data;
 
 use Illuminate\Support\Carbon;
 

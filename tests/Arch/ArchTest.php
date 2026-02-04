@@ -9,13 +9,13 @@ arch('no dd, dump, or ray calls')
     ->toBeUsed();
 
 arch('all non-abstract classes are final')
-    ->expect('AchyutN\NCM')
+    ->expect('LaravelNepal\NCM')
     ->classes()
     ->not
     ->abstractClasses()
     ->toBeFinal();
 
 arch('all enums are Enum')
-    ->expect('AchyutN\NCM\Enums')
+    ->expect('LaravelNepal\NCM\Enums')
     ->classes()
     ->toBeEnums();

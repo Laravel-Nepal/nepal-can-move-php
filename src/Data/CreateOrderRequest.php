@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data;
+namespace LaravelNepal\NCM\Data;
 
-use AchyutN\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Enums\DeliveryType;
 
 final class CreateOrderRequest
 {

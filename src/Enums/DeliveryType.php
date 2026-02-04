@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Enums;
+namespace LaravelNepal\NCM\Enums;
 
 enum DeliveryType: string
 {

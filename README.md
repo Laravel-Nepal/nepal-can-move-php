@@ -16,7 +16,7 @@ This package provides a fluent wrapper around the NCM API, normalizing API respo
 Install the package via Composer:
 
 ```bash
-composer require achyutn/nepal-can-move
+composer require laravel-nepal/nepal-can-move
 ```
 
 *(Optional)* Publish the configuration file:
@@ -51,7 +51,7 @@ NCM_SANDBOX_MODE=true
 Retrieve all available NCM branches as strictly typed `Branch` objects.
 
 ```php
-use AchyutN\NCM\Facades\NCM;
+use LaravelNepal\NCM\Facades\NCM;
 
 $branches = NCM::getBranches();
 
@@ -65,7 +65,7 @@ echo $tinkune->phone;
 Calculate delivery charges using the `DeliveryType` enum.
 
 ```php
-use AchyutN\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Enums\DeliveryType;
 
 $charge = NCM::getDeliveryCharge(
     source: $tinkune,
@@ -79,8 +79,8 @@ $charge = NCM::getDeliveryCharge(
 Use the `CreateOrderRequest` DTO to ensure all required fields are present.
 
 ```php
-use AchyutN\NCM\Data\CreateOrderRequest;
-use AchyutN\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Data\CreateOrderRequest;
+use LaravelNepal\NCM\Enums\DeliveryType;
 
 $request = new CreateOrderRequest(
     name: 'Achyut Neupane',
@@ -147,7 +147,7 @@ $order->exchange();
 ### Redirecting an Order
 
 ```php
-use AchyutN\NCM\Data\RedirectOrderRequest;
+use LaravelNepal\NCM\Data\RedirectOrderRequest;
 
 $redirect = new RedirectOrderRequest(
     orderId: $order->id,
@@ -167,7 +167,7 @@ NCM::redirectOrder($redirect);
 #### General Support
 
 ```php
-use AchyutN\NCM\Enums\TicketType;
+use LaravelNepal\NCM\Enums\TicketType;
 
 NCM::createSupportTicket(
     TicketType::OrderProcessing,
@@ -188,7 +188,7 @@ $ticketId = NCM::createCODTransferTicket(
 ## Exception Handling
 
 ```php
-use AchyutN\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Exceptions\NCMException;
 
 try {
     NCM::createOrder($request);

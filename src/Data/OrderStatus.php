@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Data;
+namespace LaravelNepal\NCM\Data;
 
-use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
+use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
 use Illuminate\Support\Carbon;
 
 /**

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Data\Branch;
-use AchyutN\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Data\Branch;
+use LaravelNepal\NCM\Enums\DeliveryType;
 use Illuminate\Support\Collection;
 
 it('fetches all branches successfully', function () {

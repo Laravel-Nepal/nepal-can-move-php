@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Managers;
+namespace LaravelNepal\NCM\Managers;
 
-use AchyutN\NCM\Enums\TicketType;
-use AchyutN\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Enums\TicketType;
+use LaravelNepal\NCM\Exceptions\NCMException;
 
 trait TicketManager
 {

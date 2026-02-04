@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Enums\TicketType;
-use AchyutN\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Enums\TicketType;
+use LaravelNepal\NCM\Exceptions\NCMException;
 
 it('can create a support ticket', function () {
     $ncm = ncm();

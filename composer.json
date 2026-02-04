@@ -1,8 +1,8 @@
 {
-    "name": "achyutn/nepal-can-move",
+    "name": "laravel-nepal/nepal-can-move",
     "description": "SDK for integration with the Nepal Can Move API in PHP applications.",
     "type": "library",
-    "keywords": ["php", "laravel", "e-commerce", "nepal can move", "sdk"],
+    "keywords": ["php", "laravel", "e-commerce", "nepal can move", "nepal", "sdk"],
     "require": {
         "php": "^8.2|^8.3|^8.4",
         "guzzlehttp/guzzle": "^7.10",
@@ -18,21 +18,21 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "AchyutN\\NCM\\": "src/"
+            "LaravelNepal\\NCM\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AchyutN\\NCM\\Tests\\": "tests/"
+            "LaravelNepal\\NCM\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "AchyutN\\NCM\\Providers\\NCMServiceProvider"
+                "LaravelNepal\\NCM\\Providers\\NCMServiceProvider"
             ],
             "aliases": {
-                "NCM": "AchyutN\\NCM\\Facades\\NCM"
+                "NCM": "LaravelNepal\\NCM\\Facades\\NCM"
             }
         }
     },

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Managers;
+namespace LaravelNepal\NCM\Managers;
 
-use AchyutN\NCM\Data\Branch;
-use AchyutN\NCM\Enums\DeliveryType;
-use AchyutN\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Data\Branch;
+use LaravelNepal\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 
 /** @phpstan-import-type BranchData from Branch */

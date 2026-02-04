@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Enums\TicketType;
+use LaravelNepal\NCM\Enums\TicketType;
 
 test('it has the correct string values for the API', function (TicketType $type, string $expected) {
     expect($type->value)->toBe($expected);

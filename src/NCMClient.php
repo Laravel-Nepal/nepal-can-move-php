@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM;
+namespace LaravelNepal\NCM;
 
-use AchyutN\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Exceptions\NCMException;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AchyutN\NCM\Facades;
+namespace LaravelNepal\NCM\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \AchyutN\NCM\NCM
+ * @see \LaravelNepal\NCM\NCM
  */
 final class NCM extends Facade
 {
@@ -16,6 +16,6 @@ final class NCM extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \AchyutN\NCM\NCM::class;
+        return \LaravelNepal\NCM\NCM::class;
     }
 }

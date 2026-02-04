@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Data\Comment;
-use AchyutN\NCM\Data\CreateOrderRequest;
-use AchyutN\NCM\Data\OrderStatus;
-use AchyutN\NCM\Data\RedirectOrderRequest;
-use AchyutN\NCM\Enums\DeliveryType;
-use AchyutN\NCM\Enums\OrderStatus as OrderStatusEnum;
-use AchyutN\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Data\Comment;
+use LaravelNepal\NCM\Data\CreateOrderRequest;
+use LaravelNepal\NCM\Data\OrderStatus;
+use LaravelNepal\NCM\Data\RedirectOrderRequest;
+use LaravelNepal\NCM\Enums\DeliveryType;
+use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
+use LaravelNepal\NCM\Exceptions\NCMException;
 use Illuminate\Support\Collection;
 
 beforeEach(function () {

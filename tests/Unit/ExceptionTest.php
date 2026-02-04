@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use AchyutN\NCM\Exceptions\NCMException;
-use AchyutN\NCM\NCM;
+use LaravelNepal\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\NCM;
 
 test('it throws an exception if the api key is empty', function () {
     new NCM(apiKey: '');

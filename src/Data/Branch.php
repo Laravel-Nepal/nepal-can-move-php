@@ -49,7 +49,7 @@ final class Branch extends BaseData
     /**
      * The address of the branch.
      */
-    public string $address;
+    public ?string $address;
 
     /**
      * The surcharge of the branch.
@@ -93,10 +93,10 @@ final class Branch extends BaseData
         $this->id = $response['pk'];
         $this->code = $response['code'];
         $this->name = $response['name'];
-        [$latitude, $longitude] = array_map(trim(...), explode(',', $response['geocode']));
+        [$latitude, $longitude] = $response['geocode'] ? array_map(trim(...), explode(',', $response['geocode'])) : [null, null];
         $this->coordinates = [
-            'latitude' => (float) trim($latitude),
-            'longitude' => (float) trim($longitude),
+            'latitude' => $latitude ? (float) trim($latitude) : 0.0,
+            'longitude' => $longitude ? (float) trim($longitude) : 0.0,
         ];
         $this->address = $response['address'];
         $this->surcharge = (float) $response['surcharge'];

@@ -1,6 +1,6 @@
 # Nepal Can Move PHP SDK
 
-[![Lint & Test PR](https://github.com/achyutkneupane/nepal-can-move-php/actions/workflows/prlint.yml/badge.svg)](https://github.com/achyutkneupane/nepal-can-move-php/actions/workflows/prlint.yml)
+[![Lint & Test PR](https://github.com/Laravel-Nepal/nepal-can-move-php/actions/workflows/prlint.yml/badge.svg)](https://github.com/achyutkneupane/nepal-can-move-php/actions/workflows/prlint.yml)
 
 A strictly typed, and expressive PHP SDK for integrating with the **Nepal Can Move (NCM)** logistics API.
 

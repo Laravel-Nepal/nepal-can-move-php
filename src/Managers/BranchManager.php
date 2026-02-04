@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace LaravelNepal\NCM\Managers;
 
+use Illuminate\Support\Collection;
 use LaravelNepal\NCM\Data\Branch;
 use LaravelNepal\NCM\Enums\DeliveryType;
 use LaravelNepal\NCM\Exceptions\NCMException;
-use Illuminate\Support\Collection;
 
 /** @phpstan-import-type BranchData from Branch */
 trait BranchManager

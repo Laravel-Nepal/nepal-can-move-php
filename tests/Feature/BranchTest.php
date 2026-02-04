@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Collection;
 use LaravelNepal\NCM\Data\Branch;
 use LaravelNepal\NCM\Enums\DeliveryType;
-use Illuminate\Support\Collection;
 
 it('fetches all branches successfully', function () {
     $ncm = ncm();

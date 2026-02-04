@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace LaravelNepal\NCM;
 
-use LaravelNepal\NCM\Exceptions\NCMException;
-use LaravelNepal\NCM\Managers\HasManagers;
 use GuzzleHttp\Client;
 use Illuminate\Support\Traits\ForwardsCalls;
+use LaravelNepal\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Managers\HasManagers;
 
 final class NCM
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace LaravelNepal\NCM\Data;
 
-use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
 use Illuminate\Support\Carbon;
+use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
 
 /**
  * @phpstan-type OrderStatusData array{

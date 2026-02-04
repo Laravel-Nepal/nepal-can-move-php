@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Collection;
 use LaravelNepal\NCM\Data\Comment;
 use LaravelNepal\NCM\Data\CreateOrderRequest;
 use LaravelNepal\NCM\Data\OrderStatus;
@@ -9,7 +10,6 @@ use LaravelNepal\NCM\Data\RedirectOrderRequest;
 use LaravelNepal\NCM\Enums\DeliveryType;
 use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
 use LaravelNepal\NCM\Exceptions\NCMException;
-use Illuminate\Support\Collection;
 
 beforeEach(function () {
     if (getenv('NCM_TOKEN') === false) {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LaravelNepal\NCM\Providers;
 
-use LaravelNepal\NCM\Exceptions\NCMException;
-use LaravelNepal\NCM\NCM;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use LaravelNepal\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\NCM;
 
 final class NCMServiceProvider extends ServiceProvider
 {

@@ -49,7 +49,7 @@ final class Branch extends BaseData
     /**
      * The address of the branch.
      */
-    public ?string $address;
+    public ?string $address = null;
 
     /**
      * The surcharge of the branch.

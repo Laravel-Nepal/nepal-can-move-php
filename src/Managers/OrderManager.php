@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaravelNepal\NCM\Managers;
 
+use Illuminate\Support\Collection;
 use LaravelNepal\NCM\Data\Comment;
 use LaravelNepal\NCM\Data\CreateOrderRequest;
 use LaravelNepal\NCM\Data\Order;
@@ -11,7 +12,6 @@ use LaravelNepal\NCM\Data\OrderStatus;
 use LaravelNepal\NCM\Data\RedirectOrderRequest;
 use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
 use LaravelNepal\NCM\Exceptions\NCMException;
-use Illuminate\Support\Collection;
 
 /**
  * @phpstan-import-type OrderData from Order

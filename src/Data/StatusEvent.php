@@ -7,6 +7,7 @@ namespace LaravelNepal\NCM\Data;
 use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 use LaravelNepal\NCM\Enums\EventStatus;
+use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
 
 /**
  * @phpstan-type StatusEventData array{
@@ -34,5 +35,10 @@ final class StatusEvent extends BaseData
         $this->status = $response['status'];
         $this->event = EventStatus::tryFrom($response['event']) ?? throw new InvalidArgumentException("Unknown event type: {$response['event']}");
         $this->timestamp = Carbon::parse($response['timestamp']);
+    }
+
+    public function getOrderStatus(): OrderStatusEnum
+    {
+        return $this->event->toOrderStatus();
     }
 }

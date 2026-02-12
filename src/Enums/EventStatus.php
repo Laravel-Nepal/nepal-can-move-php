@@ -19,7 +19,7 @@ enum EventStatus: string
             self::SentForDelivery => 'Sent for Delivery',
             self::Dispatched => 'Dispatched',
             self::Arrived => 'Arrived',
-            self::Delivered => 'Delived',
+            self::Delivered => 'Delivered',
         };
     }
 
@@ -31,6 +31,17 @@ enum EventStatus: string
             self::Dispatched => 'Order has been dispatched from origin branch.',
             self::Arrived => 'Order has arrived at destination branch.',
             self::Delivered => 'Order has been successfully delivered.',
+        };
+    }
+
+    public function toOrderStatus(): OrderStatus
+    {
+        return match ($this) {
+            self::PickupCompleted => OrderStatus::PickupComplete,
+            self::SentForDelivery => OrderStatus::SentForDelivery,
+            self::Dispatched => OrderStatus::Dispatched,
+            self::Arrived => OrderStatus::Arrived,
+            self::Delivered => OrderStatus::Delivered,
         };
     }
 }

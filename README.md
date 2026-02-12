@@ -206,7 +206,7 @@ $ncm->removeWebhookUrl();
 
 ### Handling Webhook Payloads
 
-When NCM sends a status update to your server, use `parseWebhook` to convert the raw request data into a [StatusEvent](src/Data/StatusEvent.php) DTO. This automatically maps technical events to your `OrderStatus` enums using the [`toOrderStatus`](src/Enums/EventStatus.php) method.
+When NCM sends a status update to your server, use `parseWebhook` to convert the raw request data into a [StatusEvent](src/Data/StatusEvent.php) DTO. This automatically maps technical events to your `OrderStatus` enums using the [`toOrderStatus`](src/Enums/EventStatus.php#L37) method.
 
 ```php
 try {

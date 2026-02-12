@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 use LaravelNepal\NCM\Enums\EventStatus;
 use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
+use LaravelNepal\NCM\Exceptions\NCMException;
 
 /**
  * @phpstan-type StatusEventData array{
@@ -34,11 +35,14 @@ final class StatusEvent extends BaseData
         return $this->event->toOrderStatus();
     }
 
+    /**
+     * @throws NCMException
+     */
     protected function fromResponse(array $response): void
     {
         $this->orderId = (int) $response['order_id'];
         $this->status = $response['status'];
-        $this->event = EventStatus::tryFrom($response['event']) ?? throw new InvalidArgumentException("Unknown event type: {$response['event']}");
+        $this->event = EventStatus::tryFrom($response['event']) ?? throw new NCMException("Unknown event type: {$response['event']}");
         $this->timestamp = Carbon::parse($response['timestamp']);
     }
 }

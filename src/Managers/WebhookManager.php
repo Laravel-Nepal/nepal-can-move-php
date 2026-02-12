@@ -12,18 +12,16 @@ trait WebhookManager
 {
     /**
      * Set the webhook URL for receiving order status updates.
+     *
+     * @throws NCMException
      */
     public function setWebhookUrl(string $url): bool
     {
-        try {
-            $this->client->post('/v2/vendor/webhook', [
-                'webhook_url' => $url,
-            ]);
+        $this->client->post('/v2/vendor/webhook', [
+            'webhook_url' => $url,
+        ]);
 
-            return true;
-        } catch (NCMException) {
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -38,19 +36,17 @@ trait WebhookManager
 
     /**
      * Test whether the webhook URL is valid and can receive updates.
+     *
+     * @throws NCMException
      */
     public function testWebhookUrl(string $url): bool
     {
-        try {
-            /** @var StatusEventData $response */
-            $response = $this->client->post('/v2/vendor/webhook/test', [
-                'webhook_url' => $url,
-            ]);
+        /** @var StatusEventData $response */
+        $response = $this->client->post('/v2/vendor/webhook/test', [
+            'webhook_url' => $url,
+        ]);
 
-            return trim($response['order_id'] ?? '') !== '';
-        } catch (NCMException) {
-            return false;
-        }
+        return trim($response['order_id'] ?? '') !== '';
     }
 
     /**

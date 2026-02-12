@@ -12,8 +12,6 @@ trait WebhookManager
 {
     /**
      * Set the webhook URL for receiving order status updates.
-     *
-     * @throws NCMException
      */
     public function setWebhookUrl(string $url): bool
     {
@@ -40,8 +38,6 @@ trait WebhookManager
 
     /**
      * Test whether the webhook URL is valid and can receive updates.
-     *
-     * @throws NCMException
      */
     public function testWebhookUrl(string $url): bool
     {
@@ -59,6 +55,8 @@ trait WebhookManager
 
     /**
      * Parse raw incoming request data into a typed DTO.
+     *
+     * @param  StatusEventData  $response
      */
     public function parseWebhook(array $response): StatusEvent
     {

@@ -28,9 +28,7 @@ trait WebhookManager
      */
     public function removeWebhookUrl(): bool
     {
-        return $this->client->post('/vendor/webhook', [
-            'webhook_url' => null,
-        ])->successful();
+        return $this->setWebhookUrl('');
     }
 
     /**

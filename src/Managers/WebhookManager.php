@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaravelNepal\NCM\Managers;
 
+use LaravelNepal\NCM\Data\StatusEvent;
 use LaravelNepal\NCM\Exceptions\NCMException;
 
 trait WebhookManager
@@ -42,5 +43,13 @@ trait WebhookManager
         return $this->client->post('/vendor/webhook/test', [
             'webhook_url' => $url,
         ])->successful();
+    }
+
+    /**
+     * Parse raw incoming request data into a typed DTO.
+     */
+    public function parseWebhook(array $response): StatusEvent
+    {
+        return new StatusEvent($response, $this);
     }
 }

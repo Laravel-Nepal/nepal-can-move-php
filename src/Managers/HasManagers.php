@@ -9,4 +9,5 @@ trait HasManagers
     use BranchManager;
     use OrderManager;
     use TicketManager;
+    use WebhookManager;
 }

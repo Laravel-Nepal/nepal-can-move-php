@@ -9,7 +9,7 @@ enum EventStatus: string
     case PickupCompleted = 'pickup_completed';
     case SentForDelivery = 'sent_for_delivery';
     case Dispatched = 'order_dispatched';
-    case Arrived = ' order_arrived';
+    case Arrived = 'order_arrived';
     case Delivered = 'delivery_completed';
 
     public function getLabel(): string

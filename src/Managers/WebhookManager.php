@@ -16,7 +16,7 @@ trait WebhookManager
      */
     public function setWebhookUrl(string $url): bool
     {
-        return $this->client->post('/vendor/webhook', [
+        return $this->client->post('/v2/vendor/webhook', [
             'webhook_url' => $url,
         ])->successful();
     }
@@ -38,7 +38,7 @@ trait WebhookManager
      */
     public function testWebhookUrl(string $url): bool
     {
-        return $this->client->post('/vendor/webhook/test', [
+        return $this->client->post('/v2/vendor/webhook/test', [
             'webhook_url' => $url,
         ])->successful();
     }

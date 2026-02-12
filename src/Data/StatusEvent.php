@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaravelNepal\NCM\Data;
 
 use Illuminate\Support\Carbon;
-use InvalidArgumentException;
 use LaravelNepal\NCM\Enums\EventStatus;
 use LaravelNepal\NCM\Enums\OrderStatus as OrderStatusEnum;
 use LaravelNepal\NCM\Exceptions\NCMException;

@@ -7,6 +7,7 @@ namespace LaravelNepal\NCM\Managers;
 use LaravelNepal\NCM\Data\StatusEvent;
 use LaravelNepal\NCM\Exceptions\NCMException;
 
+/** @phpstan-import-type StatusEventData from StatusEvent */
 trait WebhookManager
 {
     /**
@@ -16,9 +17,15 @@ trait WebhookManager
      */
     public function setWebhookUrl(string $url): bool
     {
-        return $this->client->post('/v2/vendor/webhook', [
-            'webhook_url' => $url,
-        ])->successful();
+        try {
+            $this->client->post('/v2/vendor/webhook', [
+                'webhook_url' => $url,
+            ]);
+
+            return true;
+        } catch (NCMException) {
+            return false;
+        }
     }
 
     /**
@@ -38,9 +45,16 @@ trait WebhookManager
      */
     public function testWebhookUrl(string $url): bool
     {
-        return $this->client->post('/v2/vendor/webhook/test', [
-            'webhook_url' => $url,
-        ])->successful();
+        try {
+            /** @var StatusEventData $response */
+            $response = $this->client->post('/v2/vendor/webhook/test', [
+                'webhook_url' => $url,
+            ]);
+
+            return trim($response['order_id'] ?? '') !== '';
+        } catch (NCMException) {
+            return false;
+        }
     }
 
     /**

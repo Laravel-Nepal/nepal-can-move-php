@@ -29,16 +29,16 @@ final class StatusEvent extends BaseData
 
     public string $status;
 
+    public function getOrderStatus(): OrderStatusEnum
+    {
+        return $this->event->toOrderStatus();
+    }
+
     protected function fromResponse(array $response): void
     {
         $this->orderId = (int) $response['order_id'];
         $this->status = $response['status'];
         $this->event = EventStatus::tryFrom($response['event']) ?? throw new InvalidArgumentException("Unknown event type: {$response['event']}");
         $this->timestamp = Carbon::parse($response['timestamp']);
-    }
-
-    public function getOrderStatus(): OrderStatusEnum
-    {
-        return $this->event->toOrderStatus();
     }
 }

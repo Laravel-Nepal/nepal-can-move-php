@@ -185,6 +185,53 @@ $ticketId = NCM::createCODTransferTicket(
 );
 ```
 
+## Webhooks
+
+The Nepal Can Move SDK allows you to manage your webhook configuration and transform incoming `POST` data into strictly typed objects.
+
+### Configuring Webhooks
+
+You can programmatically set, test, or remove your webhook URL:
+
+```php
+// Set the URL where NCM will push updates
+$ncm->setWebhookUrl('https://your-app.com/api/ncm/webhook');
+
+// Send a test payload to your URL to verify connectivity
+$ncm->testWebhookUrl('https://your-app.com/api/ncm/webhook');
+
+// Disable webhooks
+$ncm->removeWebhookUrl();
+```
+
+### Handling Webhook Payloads
+
+When NCM sends a status update to your server, use `parseWebhook` to convert the raw request data into a [StatusEvent](src/Data/StatusEvent.php) DTO. This automatically maps technical events to your `OrderStatus` enums using the [`toOrderStatus`](src/Enums/EventStatus.php#L37) method.
+
+```php
+use LaravelNepal\NCM\Exceptions\NCMException;
+use LaravelNepal\NCM\Enums\OrderStatus;
+
+try {
+    $event = $ncm->parseWebhook($payload);
+
+    echo $event->orderId;              // e.g., 123
+    echo $event->event->getLabel();    // e.g., "Delivered"
+    
+    // Get the normalized OrderStatus enum
+    $status = $event->getOrderStatus(); 
+    
+    if ($status === OrderStatus::Delivered) {
+        // Perform business logic
+    }
+} catch (NCMException $NCMException) {
+    // Handle unknown event types or malformed data
+}
+```
+
+> [!TIP]
+> Since NCM webhooks do not currently include a cryptographic signature, it is recommended to add a unique query parameter to your webhook URL (e.g., `?secret=your-random-key`) and verify it in your controller to ensure the request is legitimate.
+
 ## Exception Handling
 
 ```php

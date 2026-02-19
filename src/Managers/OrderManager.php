@@ -27,14 +27,10 @@ trait OrderManager
      */
     public function createOrder(CreateOrderRequest $createOrderRequest): Order
     {
-        try {
-            /** @var OrderData $response */
-            $response = $this->client->post('/v1/order/create', $createOrderRequest->toArray());
-        } catch (NCMException $e) {
-            throw new NCMException("Failed to create order: {$e->getMessage()}", previous: $e);
-        }
+        /** @var OrderData $response */
+        $response = $this->client->post('/v1/order/create', $createOrderRequest->toArray());
 
-        if (is_array($response) && empty($response)) {
+        if ($response === []) {
             throw new NCMException('Failed to create order: Invalid response from API.');
         }
 

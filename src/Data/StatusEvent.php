@@ -11,7 +11,8 @@ use LaravelNepal\NCM\Exceptions\NCMException;
 
 /**
  * @phpstan-type StatusEventData array{
- *     order_id: string,
+ *     order_id?: string|int,
+ *     order_ids?: array<string|int>,
  *     event: string,
  *     timestamp: string,
  *     status: string,
@@ -21,7 +22,8 @@ use LaravelNepal\NCM\Exceptions\NCMException;
  */
 final class StatusEvent extends BaseData
 {
-    public int $orderId;
+    /** @var array<int> */
+    public array $orderIds = [];
 
     public EventStatus $event;
 
@@ -35,11 +37,28 @@ final class StatusEvent extends BaseData
     }
 
     /**
+     * Check if the webhook contains multiple orders.
+     */
+    public function isBulk(): bool
+    {
+        return count($this->orderIds) > 1;
+    }
+
+    /**
      * @throws NCMException
      */
     protected function fromResponse(array $response): void
     {
-        $this->orderId = (int) $response['order_id'];
+        if (isset($response['order_ids']) && is_array($response['order_ids'])) {
+            $this->orderIds = array_map(intval(...), $response['order_ids']);
+        } elseif (isset($response['order_id'])) {
+            $this->orderIds = [(int) $response['order_id']];
+        }
+
+        if ($this->orderIds === []) {
+            throw new NCMException('Webhook payload must contain at least one order ID.');
+        }
+
         $this->status = $response['status'];
         $this->event = EventStatus::tryFrom($response['event']) ?? throw new NCMException("Unknown event type: {$response['event']}");
         $this->timestamp = Carbon::parse($response['timestamp']);

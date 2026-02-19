@@ -15,6 +15,8 @@ beforeEach(function () {
     if (getenv('NCM_TOKEN') === false) {
         $this->markTestSkipped('NCM_TOKEN not defined in ENV.');
     }
+
+    sleep(1);
 });
 
 it('fails to create an order with invalid values', function () {

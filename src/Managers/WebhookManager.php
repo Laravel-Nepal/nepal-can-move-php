@@ -46,7 +46,9 @@ trait WebhookManager
             'webhook_url' => $url,
         ]);
 
-        return trim($response['order_id'] ?? '') !== '';
+        $orderId = (string) ($response['order_id'] ?? '');
+
+        return trim($orderId) !== '';
     }
 
     /**

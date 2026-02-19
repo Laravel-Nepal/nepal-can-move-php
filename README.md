@@ -215,8 +215,8 @@ use LaravelNepal\NCM\Enums\OrderStatus;
 try {
     $event = $ncm->parseWebhook($payload);
 
-    echo $event->orderId;              // e.g., 123
-    echo $event->event->getLabel();    // e.g., "Delivered"
+    echo $event->orderIds; // e.g., [123, 124]
+    echo $event->event->getLabel(); // e.g., "Delivered"
     
     // Get the normalized OrderStatus enum
     $status = $event->getOrderStatus(); 
